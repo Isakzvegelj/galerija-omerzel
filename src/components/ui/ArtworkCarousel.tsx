@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
 import { Artwork } from '@/types/artwork'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, assetPath } from '@/lib/utils'
 import Image from 'next/image'
 
 interface ArtworkCarouselProps {
@@ -89,7 +89,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
               >
                 {primaryImage && (
                   <Image
-                    src={primaryImage.url}
+                    src={assetPath(primaryImage.url)}
                     alt={primaryImage.alt}
                     fill
                     className="object-cover"
@@ -225,7 +225,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
             >
               {thumbImage && (
                 <Image
-                  src={thumbImage.url}
+                  src={assetPath(thumbImage.url)}
                   alt={artwork.title}
                   fill
                   className="object-cover"

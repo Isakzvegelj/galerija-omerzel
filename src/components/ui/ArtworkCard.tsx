@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, formatDimensions, getCategoryLabel } from '@/lib/utils'
+import { formatPrice, formatDimensions, getCategoryLabel, assetPath } from '@/lib/utils'
 
 interface ArtworkCardProps {
   artwork: Artwork
@@ -45,7 +45,7 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
       >
         {primaryImage && !imageError ? (
           <Image
-            src={primaryImage.url}
+            src={assetPath(primaryImage.url)}
             alt={primaryImage.alt}
             fill
             priority={false}

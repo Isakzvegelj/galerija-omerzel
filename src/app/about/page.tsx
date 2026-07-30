@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image';
 import { galleryInfo } from '@/data/gallery';
+import { assetPath } from '@/lib/utils';
 
 export default function About() {
   return (
@@ -74,7 +75,7 @@ export default function About() {
             <div className="order-2 lg:order-1">
               <div className="relative h-80 bg-gray-100 rounded-lg overflow-hidden">
                 <Image
-                  src="/images/owner-portrait.jpg" 
+                  src={assetPath("/images/owner-portrait.jpg")}
                   alt="Anton Omerzel, Founder of Galerija Omerzel"
                   fill
                   className="object-cover"

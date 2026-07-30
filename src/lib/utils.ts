@@ -1,8 +1,15 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+const BASE_PATH = '/galerija-omerzel'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function assetPath(path: string): string {
+  if (path.startsWith('http') || path.startsWith('data:')) return path
+  return `${BASE_PATH}${path}`
 }
 
 export function formatPrice(price: number, currency: string = 'EUR'): string {

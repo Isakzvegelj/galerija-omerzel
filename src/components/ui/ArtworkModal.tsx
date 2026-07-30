@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, formatDimensions, getCategoryLabel } from '@/lib/utils'
+import { formatPrice, formatDimensions, getCategoryLabel, assetPath } from '@/lib/utils'
 import { ArtworkInquiryModal } from './ArtworkInquiryModal'
 import { AIImageEnhancer } from './AIImageEnhancer'
 
@@ -103,7 +103,7 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
                 </div>
               ) : (
                 <Image
-                  src={currentImage.url}
+                  src={assetPath(currentImage.url)}
                   alt={currentImage.alt}
                   fill
                   className={`object-contain transition-all duration-300 ${
