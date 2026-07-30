@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: '/galerija-omerzel',
+  trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
