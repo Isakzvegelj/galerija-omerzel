@@ -1,0 +1,49 @@
+{
+  "navigation": {
+    "home": "Domov",
+    "gallery": "Galerija",
+    "about": "O nas",
+    "contact": "Kontakt",
+    "videos": "Videi"
+  },
+  "hero": {
+    "title": "Galerija Omerzel",
+    "subtitle": "Odkrijte sodobno slovensko umetnost v srcu Bledu",
+    "exploreGallery": "Raziščite Galerijo",
+    "learnMore": "Več informacij"
+  },
+  "gallery": {
+    "title": "Umetniška Galerija",
+    "subtitle": "Raziščite našo zbirko sodobnih slovenskih umetniških del",
+    "filterByCategory": "Filtriraj po kategoriji",
+    "allCategories": "Vse kategorije",
+    "sortBy": "Razvrsti po",
+    "showing": "Prikazujem",
+    "of": "od",
+    "artworks": "umetniških del",
+    "noResults": "Umetniških del ni mogoče najti",
+    "noResultsDesc": "Poskusite prilagoditi merila iskanja ali brskajte po naši celotni zbirki.",
+    "clearFilters": "Počisti filtre"
+  },
+  "about": {
+    "title": "O Galeriji Omerzel",
+    "subtitle": "Galerija sodobne umetnosti v Bledu, Slovenija"
+  },
+  "contact": {
+    "title": "Kontaktirajte nas",
+    "subtitle": "Stopite v stik z Galerijo Omerzel",
+    "send_message": "Pošljite nam sporočilo",
+    "thank_you": "Hvala!",
+    "success_msg": "Vaše sporočilo je bilo uspešno poslano. Odgovorili vam bomo v 24 urah.",
+    "send_another": "Pošlji drugo sporočilo",
+    "sending": "Pošiljanje...",
+    "error_msg": "Nekaj je šlo narobe. Prosimo, poskusite znova.",
+    "required_fields": "* Obvezna polja. Na vaše povpraševanje bomo odgovorili v 24 urah."
+  },
+  "footer": {
+    "description": "Galerija umetnosti v Bledu, Slovenija, ki predstavlja sodobna in tradicionalna umetniška dela lokalnih in mednarodnih umetnikov.",
+    "owner": "Lastnik",
+    "quickLinks": "Hitre povezave",
+    "language": "Jezik"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "navigation": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "about": "About",
+    "contact": "Contact",
+    "videos": "Videos"
+  },
+  "hero": {
+    "title": "Galerija Omerzel",
+    "subtitle": "Discover contemporary Slovenian art in the heart of Bled",
+    "exploreGallery": "Explore Gallery",
+    "learnMore": "Learn More"
+  },
+  "gallery": {
+    "title": "Art Gallery",
+    "subtitle": "Explore our collection of contemporary Slovenian artworks",
+    "filterByCategory": "Filter by Category",
+    "allCategories": "All Categories",
+    "sortBy": "Sort by",
+    "showing": "Showing",
+    "of": "of",
+    "artworks": "artworks",
+    "noResults": "No Artworks Found",
+    "noResultsDesc": "Try adjusting your search criteria or browse our full collection.",
+    "clearFilters": "Clear Filters"
+  },
+  "about": {
+    "title": "About Galerija Omerzel",
+    "subtitle": "Contemporary Art Gallery in Bled, Slovenia"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with Galerija Omerzel",
+    "send_message": "Send us a message",
+    "thank_you": "Thank You!",
+    "success_msg": "Your message has been sent successfully. We'll get back to you within 24 hours.",
+    "send_another": "Send another message",
+    "sending": "Sending...",
+    "error_msg": "Something went wrong. Please try again.",
+    "required_fields": "* Required fields. We'll respond to your inquiry within 24 hours."
+  },
+  "footer": {
+    "description": "Art gallery located in Bled, Slovenia, showcasing contemporary and traditional artworks from local and international artists.",
+    "owner": "Owner",
+    "quickLinks": "Quick Links",
+    "language": "Language"
+  }
+}
