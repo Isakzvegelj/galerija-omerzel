@@ -13,8 +13,9 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Simple password for demo - in production, use proper authentication
-  const ADMIN_PASSWORD = 'omerzel2024'
+  // Read admin password from environment variable (set in .env.local)
+  // For production, use a proper authentication backend instead of a client-side password
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,7 +25,9 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    if (password === ADMIN_PASSWORD) {
+    if (!ADMIN_PASSWORD) {
+      setError('Admin password not configured. Set NEXT_PUBLIC_ADMIN_PASSWORD in .env.local')
+    } else if (password === ADMIN_PASSWORD) {
       onLogin(true)
     } else {
       setError('Invalid password')
