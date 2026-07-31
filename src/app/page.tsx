@@ -178,7 +178,7 @@ export default function Home() {
               >
                 <Link
                   href="/gallery"
-                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-600 hover:bg-navy-700 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-700 hover:bg-navy-800 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-xl hover:shadow-2xl"
                 >
                   {t('exploreGallery')}
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -230,21 +230,9 @@ export default function Home() {
       </section>
 
       {/* Featured Artworks */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-16 bg-navy-50 dark:bg-navy-800"
-      >
+      <section className="py-16 bg-navy-50 dark:bg-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-navy-900 dark:text-gold-400 mb-4">
               Featured Artworks
             </h2>
@@ -252,55 +240,30 @@ export default function Home() {
               Discover a selection of our most captivating pieces, each telling a unique story
               and bringing beauty to your space.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             {featuredArtworks.map((artwork) => (
-              <motion.div
-                key={artwork.id}
-                variants={cardVariants}
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <div key={artwork.id}>
                 <ArtworkCard
                   artwork={artwork}
                   onClick={() => setSelectedArtwork(artwork)}
                 />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <div className="text-center">
+            <Link
+              href="/gallery"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-600 hover:bg-navy-700 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              <Link
-                href="/gallery"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-600 hover:bg-navy-700 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                View Full Gallery
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </motion.div>
-          </motion.div>
+              View Full Gallery
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
         </div>
-      </motion.section>
+      </section>
 
 
       {/* About Preview */}

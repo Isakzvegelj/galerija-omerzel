@@ -25,7 +25,7 @@ export function Header() {
   }
 
   return (
-    <header className="bg-navy-900 shadow-lg border-b border-gold-600 sticky top-0 z-50 mb-16">
+    <header className="bg-navy-900 shadow-lg border-b border-gold-600 sticky top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
