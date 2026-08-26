@@ -20,23 +20,17 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      })
-      setSubmitStatus('success')
-    } catch {
-      setSubmitStatus('error')
-    }
-    
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone || 'Not provided'}`,
+      '',
+      formData.message,
+    ].join('\n')
+    const subject = formData.subject || 'Website inquiry'
+
+    window.location.href = `mailto:${galleryInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setSubmitStatus('success')
     setIsSubmitting(false)
   }
 
@@ -161,7 +155,7 @@ export default function Contact() {
           {submitStatus === 'success' ? (
             <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center mb-8">
               <h3 className="text-xl font-semibold text-green-800 mb-2">Thank You!</h3>
-              <p className="text-green-700 mb-4">Your message has been sent successfully. We&apos;ll get back to you within 24 hours.</p>
+              <p className="text-green-700 mb-4">Your email app should now be open with your message ready to send. We&apos;ll get back to you within 24 hours.</p>
               <button
                 onClick={() => setSubmitStatus('idle')}
                 className="px-6 py-2 border border-green-300 text-green-700 bg-white rounded-md hover:bg-green-50 transition-colors"

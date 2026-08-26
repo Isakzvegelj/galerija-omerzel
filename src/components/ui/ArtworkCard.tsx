@@ -15,7 +15,9 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
   const primaryImage = artwork.images.find(img => img.isPrimary) || artwork.images[0]
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      aria-label={`View details for ${artwork.title}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -25,7 +27,7 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
         transition: { duration: 0.3, ease: "easeOut" }
       }}
       whileTap={{ scale: 0.98 }}
-      className="bg-white dark:bg-navy-800 rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-2xl dark:hover:shadow-3xl transition-all duration-300 relative group"
+      className="w-full text-left bg-white dark:bg-navy-800 rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-2xl dark:hover:shadow-3xl transition-all duration-300 relative group"
       onClick={onClick}
       style={{
         filter: "drop-shadow(0 0 0 rgba(59, 130, 246, 0))"
@@ -127,6 +129,6 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
           {formatDimensions(artwork.dimensions)}
         </div>
       </motion.div>
-    </motion.div>
+    </motion.button>
   )
 }

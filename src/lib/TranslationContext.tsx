@@ -21,8 +21,10 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
   // Load saved language preference on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedLanguage = localStorage.getItem('preferred-language') as Language || 'en'
-      setLanguageState(savedLanguage)
+      const savedLanguage = localStorage.getItem('preferred-language')
+      if (savedLanguage === 'en' || savedLanguage === 'sl') {
+        setLanguageState(savedLanguage)
+      }
     }
   }, [])
 

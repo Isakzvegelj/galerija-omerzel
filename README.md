@@ -12,13 +12,13 @@ A modern, responsive website for Galerija Omerzel, an art gallery located in Ble
 - **Performance**: Lazy loading, image optimization, and compression
 
 ### Admin Panel
-- **Artwork Management**: Add, edit, and delete artworks
-- **Secure Access**: Password-protected admin dashboard
-- **Real-time Updates**: Changes reflect immediately on the frontend
+- **Artwork Management**: Local/demo add, edit, and delete interface
+- **Demo Access**: Client-side password gate for local review only
+- **Local Updates**: Changes are kept in browser state and are not a publishing backend
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
@@ -81,12 +81,12 @@ src/
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory:
+The published site is a static export and does not require environment variables.
+Keep local-only secrets in `.env.local`; never commit them.
 
-```env
-# Admin password (change in production)
-ADMIN_PASSWORD=omerzel2024
-```
+The former AI image-enhancement endpoint was removed because server routes cannot
+be included in the GitHub Pages static export. Artwork inquiries use the contact
+form and email links instead.
 
 ### Gallery Information
 
@@ -146,31 +146,21 @@ colors: {
 
 ## Deployment
 
-### Vercel (Recommended)
+The current configuration uses `output: 'export'` for GitHub Pages. Run:
 
-1. Push to GitHub
-2. Connect to Vercel
-3. Deploy automatically
+```bash
+npm ci
+npm run lint
+npm run build
+```
 
-### Netlify
-
-1. Build command: `npm run build`
-2. Publish directory: `.next`
-3. Deploy
-
-### Other Platforms
-
-The app is compatible with any Node.js hosting platform.
+Publish the generated `out/` directory. The configured project base path is
+`/galerija-omerzel`.
 
 ## Admin Access
 
-- **URL**: `/admin`
-- **Default Password**: `omerzel2024` (change in production)
-- **Features**:
-  - Add new artworks
-  - Edit existing artworks
-  - Delete artworks
-  - Real-time gallery updates
+The public static build does not include an admin route. Add administration
+only after implementing server-backed authentication and persistent storage.
 
 ## Performance Features
 

@@ -10,10 +10,23 @@ import { TranslationProvider } from '@/lib/TranslationContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Galerija Omerzel',
-  description: 'Sodobna umetnost iz Bleda',
+  title: {
+    default: 'Galerija Omerzel | Bled, Slovenia',
+    template: '%s | Galerija Omerzel',
+  },
+  description: 'Discover contemporary and traditional art at Galerija Omerzel in Bled, Slovenia.',
+  keywords: ['Galerija Omerzel', 'art gallery', 'Bled', 'Slovenia', 'contemporary art'],
+  alternates: {
+    canonical: './',
+  },
+  openGraph: {
+    title: 'Galerija Omerzel | Bled, Slovenia',
+    description: 'Discover contemporary and traditional art at Galerija Omerzel in Bled, Slovenia.',
+    type: 'website',
+    locale: 'en_US',
+  },
   icons: {
-    icon: '/favicon.svg',
+    icon: '/galerija-omerzel/favicon.svg',
   },
 }
 

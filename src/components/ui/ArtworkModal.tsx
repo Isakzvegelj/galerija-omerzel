@@ -6,7 +6,6 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
 import { formatPrice, formatDimensions, getCategoryLabel, assetPath } from '@/lib/utils'
 import { ArtworkInquiryModal } from './ArtworkInquiryModal'
-import { AIImageEnhancer } from './AIImageEnhancer'
 
 interface ArtworkModalProps {
   artwork: Artwork | null
@@ -221,9 +220,6 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
                   </p>
                 </div>
               )}
-
-              {/* AI Image Enhancer */}
-              <AIImageEnhancer artwork={artwork} />
             </div>
           </div>
         </div>

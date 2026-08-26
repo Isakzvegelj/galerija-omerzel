@@ -1,15 +1,17 @@
-# Galerija Omerzel - Production Deployment Guide
+# Galerija Omerzel - Static Deployment Guide
 
-## 🚀 Ready for Public Deployment!
+## Current publishing status
 
-Your Galerija Omerzel website is now ready for public deployment with:
+The site is configured as a static Next.js export for GitHub Pages:
 
-✅ **Real Artwork Images**: 20+ high-quality artworks properly embedded
-✅ **Professional Gallery**: Complete collection with filtering and search
-✅ **Admin Panel**: Secure artwork management system
-✅ **Responsive Design**: Works perfectly on all devices
-✅ **SEO Optimized**: Ready for search engines
-✅ **Production Build**: Successfully compiled and optimized
+✅ **Real Artwork Images**: 20+ high-quality artworks embedded
+✅ **Professional Gallery**: Collection with filtering and search
+✅ **Responsive Design**: Desktop and mobile layouts
+✅ **SEO foundation**: Metadata, favicon, and semantic page structure
+✅ **Static-safe**: No server API routes required by the public site
+
+Before publishing, run the local verification commands below and confirm the
+GitHub Pages repository and base path are still correct.
 
 ## 📊 Current Collection
 
@@ -19,38 +21,32 @@ Your Galerija Omerzel website is now ready for public deployment with:
 
 ## 🌐 Deployment Options
 
-### Option 1: Vercel (Recommended)
+### GitHub Pages (configured target)
+
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy from project directory
-cd /Users/isakzvegelj/isak-projects/organized-projects/development-tools/projects/web-development/omerzel-gallery
-vercel
-
-# Follow prompts to connect to GitHub and deploy
+npm ci
+npm run lint
+npm run build
 ```
 
-### Option 2: Netlify
-1. Push code to GitHub repository
-2. Connect Netlify to your GitHub repo
-3. Build settings:
-   - Build command: `npm run build`
-   - Publish directory: `.next`
+Publish the generated `out/` directory from the repository's configured
+`gh-pages` workflow. The current `basePath` is `/galerija-omerzel`; change it in
+`next.config.js` if the repository name changes.
 
-### Option 3: Traditional Hosting
-- Upload `.next` folder to your web server
-- Ensure Node.js 18+ is installed
-- Run `npm start` in production
+### Server hosting
+
+Vercel, Netlify, or another Node host can also serve the project, but the
+current configuration intentionally uses `output: 'export'`. Deploy the
+`out/` directory rather than `.next/` unless the Next configuration is changed.
 
 ## 🔧 Pre-Deployment Checklist
 
 - [x] All artwork images are properly embedded
 - [x] Gallery displays correctly with real images
-- [x] Admin panel is functional
-- [x] Contact information is accurate
-- [x] Build completes without errors
-- [x] All pages are accessible
+- [x] Nonfunctional client-side admin demo removed from public build
+- [x] Contact information is present
+- [ ] `npm run lint` and `npm run build` pass in the publishing environment
+- [ ] All pages checked in the final hosted URL
 
 ## 📱 Features Ready for Public Use
 
@@ -68,13 +64,12 @@ vercel
 - **Location**: Polje 4, 4260 Bled, Slovenia
 - **Phone**: +386 40 855 755
 - **Email**: galerija.omerzel@gmail.com
-- **Hours**: Tuesday-Saturday 10:00-18:00, Sunday 10:00-16:00
+- **Hours**: Tuesday-Friday 10:00-18:00, Saturday 10:00-16:00, Sunday-Monday closed
 
 ## 🔐 Admin Access
 
-- **URL**: `/admin`
-- **Password**: `omerzel2024` (change in production!)
-- **Features**: Add, edit, delete artworks
+The public static build does not include an admin route. Add administration
+only after implementing server-backed authentication and persistent storage.
 
 ## 📈 Next Steps for Going Live
 

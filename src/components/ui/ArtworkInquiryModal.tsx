@@ -41,7 +41,7 @@ export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiry
       newErrors.email = 'Please enter a valid email address'
     }
 
-    if (!formData.message.trim()) {
+    if (!formData.message.trim() && !defaultMessage.trim()) {
       newErrors.message = 'Message is required'
     }
 
@@ -68,22 +68,18 @@ export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiry
 
     setIsSubmitting(true)
 
-    try {
-      // Simulate API call - replace with actual form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone || 'Not provided'}`,
+      '',
+      formData.message || defaultMessage,
+    ].join('\n')
+    const subject = `Artwork inquiry: ${artwork?.title || 'Artwork'}`
 
-      setIsSubmitted(true)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      })
-    } catch (error) {
-      console.error('Form submission error:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
+    window.location.href = `mailto:galerija.omerzel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setIsSubmitted(true)
+    setIsSubmitting(false)
   }
 
   const resetForm = () => {

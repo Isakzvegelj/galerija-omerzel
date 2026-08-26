@@ -63,23 +63,20 @@ export function ContactForm() {
 
     setIsSubmitting(true)
 
-    try {
-      // Simulate API call - replace with actual form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone || 'Not provided'}`,
+      '',
+      formData.message,
+    ].join('\n')
+    const subject = formData.subject
+      ? `${formData.subject} — website inquiry`
+      : 'Website inquiry'
 
-      setIsSubmitted(true)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      })
-    } catch (error) {
-      console.error('Form submission error:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
+    window.location.href = `mailto:galerija.omerzel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setIsSubmitted(true)
+    setIsSubmitting(false)
   }
 
   if (isSubmitted) {
@@ -88,7 +85,7 @@ export function ContactForm() {
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Thank You!</h3>
         <p className="text-gray-600 mb-4">
-          Your message has been sent successfully. We&apos;ll get back to you within 24 hours.
+          Your email app should now be open with your message ready to send. We&apos;ll get back to you within 24 hours.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
