@@ -5,6 +5,10 @@
 **Status:** Branch `main` started at `543ca57`. Local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, and mobile carousel/header/player refinements. `npm run lint` and `npm run build` pass; lint has 3 pre-existing warnings. Phone preview at Tailscale port 4173 runs for 30 minutes. `bledgallery.com` remains an unverified domain candidate.
 **Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages (`basePath: /galerija-omerzel`).
 
+## Off-box backup (2026-10-02)
+- Automatically mirrored to a **private** repo via a remote named `backup` (ssh alias `github-backup`), committed and pushed every 6h by `~/.local/bin/dsh-work-backup`. The 10 files of uncommitted client work are now preserved off-box.
+- The backup path deliberately **never** pushes to `origin`. `origin` (`isakzvegelj/galerija-omerzel`) is the live site: `.github/workflows/deploy.yml` publishes to GitHub Pages on any push to `main`. Backing up and publishing are separate acts — keep them that way.
+
 ## Run & deploy
 - Install with `npm ci`; lint with `npm run lint`; build static export with `npm run build` (outputs `out/`).
 - `npm run dev` runs the local Next dev server (base path applies).
@@ -21,4 +25,4 @@
 - Static export is configured for the GitHub Pages project URL. A custom domain needs DNS/hosting configuration and corresponding canonical URL/base-path adjustments; no domain purchase or DNS change without explicit approval.
 - The existing public admin route is intentionally absent from static output; see README/DEPLOYMENT docs, which may contain stale claims.
 
-*Last reviewed: 2026-10-01*
+*Last reviewed: 2026-10-02 (added off-box private backup mirror; the backup path never pushes to `origin`, so backing up never publishes). Earlier 2026-10-01*
