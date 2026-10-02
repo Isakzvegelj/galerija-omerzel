@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, formatDimensions, getCategoryLabel, assetPath } from '@/lib/utils'
+import { formatPrice, getCategoryLabel, assetPath } from '@/lib/utils'
 
 interface ArtworkCardProps {
   artwork: Artwork
@@ -72,7 +72,7 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
         )}
 
         {/* Overlay with price */}
-        {artwork.price && artwork.isAvailable && (
+        {artwork.isAvailable && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -80,7 +80,7 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
             className="absolute top-2 right-2 bg-white/95 dark:bg-navy-900/95 backdrop-blur-sm px-3 py-1 rounded-md shadow-lg"
           >
             <span className="text-sm font-bold text-navy-900 dark:text-gold-400">
-              {formatPrice(artwork.price, artwork.currency)}
+              {artwork.price ? formatPrice(artwork.price, artwork.currency) : 'Price on request'}
             </span>
           </motion.div>
         )}
@@ -118,15 +118,13 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
         >
           {artwork.title}
         </motion.h3>
-        <p className="text-navy-600 dark:text-navy-300 text-sm mb-2">
-          by {artwork.artist}
-        </p>
-        <div className="flex items-center justify-between text-xs text-navy-500 dark:text-navy-400">
-          <span>{getCategoryLabel(artwork.category)}</span>
-          {artwork.year && <span>{artwork.year}</span>}
-        </div>
-        <div className="mt-2 text-xs text-navy-500 dark:text-navy-400">
-          {formatDimensions(artwork.dimensions)}
+        {artwork.artist !== 'Contemporary Slovenian Artist' && (
+          <p className="text-navy-600 dark:text-navy-300 text-sm mb-2">
+            by {artwork.artist}
+          </p>
+        )}
+        <div className="text-xs text-navy-500 dark:text-navy-400">
+          {getCategoryLabel(artwork.category)}
         </div>
       </motion.div>
     </motion.button>

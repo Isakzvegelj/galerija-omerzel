@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, formatDimensions, getCategoryLabel, assetPath } from '@/lib/utils'
+import { formatPrice, getCategoryLabel, assetPath } from '@/lib/utils'
 import { ArtworkInquiryModal } from './ArtworkInquiryModal'
 
 interface ArtworkModalProps {
@@ -153,57 +153,28 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                   {artwork.title}
                 </h2>
-                <p className="text-lg text-gray-600">
-                  by {artwork.artist}
-                </p>
+                {artwork.artist !== 'Contemporary Slovenian Artist' && (
+                  <p className="text-lg text-gray-600">
+                    by {artwork.artist}
+                  </p>
+                )}
               </div>
 
               {/* Price */}
-              {artwork.price && (
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-gray-900">
-                    {formatPrice(artwork.price, artwork.currency)}
+              <div className="flex items-center justify-between">
+                <span className="text-xl font-bold text-gray-900">
+                  {artwork.price ? formatPrice(artwork.price, artwork.currency) : 'Price on request'}
+                </span>
+                {!artwork.isAvailable && (
+                  <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+                    Sold
                   </span>
-                  {!artwork.isAvailable && (
-                    <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                      Sold
-                    </span>
-                  )}
-                </div>
-              )}
-
-              {/* Description */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {artwork.description}
-                </p>
+                )}
               </div>
 
-              {/* Details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Category</h4>
-                  <p className="text-gray-600 capitalize">
-                    {getCategoryLabel(artwork.category)}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Medium</h4>
-                  <p className="text-gray-600">{artwork.medium}</p>
-                </div>
-                {artwork.year && (
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Year</h4>
-                    <p className="text-gray-600">{artwork.year}</p>
-                  </div>
-                )}
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Dimensions</h4>
-                  <p className="text-gray-600">
-                    {formatDimensions(artwork.dimensions)}
-                  </p>
-                </div>
+              <div className="space-y-2 text-sm text-gray-600">
+                <p>Category: {getCategoryLabel(artwork.category)}</p>
+                <p>Ask the gallery for confirmed artist, date, medium, dimensions, and provenance.</p>
               </div>
 
               {/* Contact Button */}

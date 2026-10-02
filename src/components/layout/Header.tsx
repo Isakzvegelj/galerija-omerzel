@@ -30,9 +30,9 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <GOLogo size="md" />
-              <span className="text-xl font-bold text-gold-400">Galerija Omerzel</span>
+            <Link href="/" className="flex min-w-0 items-center gap-2">
+              <GOLogo size="sm" className="shrink-0 sm:h-8 sm:w-8" />
+              <span className="whitespace-nowrap text-base font-bold text-gold-400 sm:text-xl">Galerija Omerzel</span>
             </Link>
           </div>
 
@@ -72,7 +72,7 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex shrink-0 items-center space-x-2">
             <ThemeToggle />
             <button
               type="button"

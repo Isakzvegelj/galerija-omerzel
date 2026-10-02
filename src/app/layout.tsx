@@ -11,17 +11,17 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Galerija Omerzel | Bled, Slovenia',
+    default: 'Galerija Omerzel | Art Gallery in Bled, Slovenia',
     template: '%s | Galerija Omerzel',
   },
-  description: 'Discover contemporary and traditional art at Galerija Omerzel in Bled, Slovenia.',
+  description: 'Visit Galerija Omerzel, an art gallery in Bled, Slovenia. Explore paintings and sculptures, view the collection, and contact the gallery about works or a visit.',
   keywords: ['Galerija Omerzel', 'art gallery', 'Bled', 'Slovenia', 'contemporary art'],
   alternates: {
     canonical: './',
   },
   openGraph: {
-    title: 'Galerija Omerzel | Bled, Slovenia',
-    description: 'Discover contemporary and traditional art at Galerija Omerzel in Bled, Slovenia.',
+    title: 'Galerija Omerzel | Art Gallery in Bled, Slovenia',
+    description: 'Visit Galerija Omerzel, an art gallery in Bled, Slovenia. Explore paintings and sculptures, view the collection, and contact the gallery about works or a visit.',
     type: 'website',
     locale: 'en_US',
   },

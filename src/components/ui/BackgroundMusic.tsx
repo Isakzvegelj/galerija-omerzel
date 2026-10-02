@@ -70,7 +70,7 @@ export function BackgroundMusic() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 bg-navy-900/90 dark:bg-navy-800/90 backdrop-blur-md rounded-full p-3 shadow-2xl border border-gold-500/20">
+    <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 max-w-[calc(100vw-1.5rem)] bg-navy-900/90 dark:bg-navy-800/90 backdrop-blur-md rounded-full p-2 sm:p-3 shadow-2xl border border-gold-500/20">
       <div className="flex items-center space-x-3">
         {/* Play/Pause Button */}
         <button
@@ -82,7 +82,7 @@ export function BackgroundMusic() {
         </button>
 
         {/* Volume Control */}
-        <div className="flex items-center space-x-2">
+        <div className="hidden sm:flex items-center space-x-2">
           <button
             onClick={toggleMute}
             className="p-1 rounded-full text-navy-200 hover:text-gold-400 transition-colors"

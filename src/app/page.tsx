@@ -159,14 +159,13 @@ export default function Home() {
               variants={itemVariants}
               className="text-5xl sm:text-6xl font-bold text-navy-900 dark:text-gold-400 mb-6"
             >
-              Galerija Omerzel
+              Visit our gallery in Bled
             </motion.h1>
             <motion.p
               variants={itemVariants}
               className="text-xl text-navy-700 dark:text-navy-200 mb-8 max-w-3xl mx-auto"
             >
-              Discover contemporary Slovenian art in the heart of Bled.
-              Our curated collection features exceptional works by local and international artists.
+              Browse the collection online or plan a visit to Galerija Omerzel.
             </motion.p>
             <motion.div
               variants={itemVariants}
