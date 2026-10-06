@@ -1,8 +1,8 @@
 # omerzel-website
 
 **What:** Galerija Omerzel art-gallery website in Bled, Slovenia. Source: `isakzvegelj/galerija-omerzel`; currently hosted at `https://isakzvegelj.github.io/galerija-omerzel/`.
-**Now:** Responsive gallery polish complete; unverified prices display as “Price on request.” No market pricing is claimed because web search returned no reliable comparables. Nothing published.
-**Status:** Branch `main` started at `543ca57`. Local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, and mobile carousel/header/player refinements. `npm run lint` and `npm run build` pass; lint has 3 pre-existing warnings. Phone preview at Tailscale port 4173 runs for 30 minutes. `bledgallery.com` remains an unverified domain candidate.
+**Now:** Homepage refresh is complete locally: warm editorial palette, concise hero, shorter featured-artwork carousel, verified visit details, and no custom cursor. Fixed Tailwind v4 not loading the custom palette; navy/gold text and backgrounds now render with intended contrast. Unverified prices display as “Price on request”; nothing published.
+**Status:** Branch `main` started at `543ca57`. Local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, mobile carousel/header/player refinements, and the 2026-10-06 homepage/palette fixes. `npm run lint` passed before the CSS-only fix (2 pre-existing warnings); `npm run build` passes after it. Temporary static preview uses Tailscale port 4173. `bledgallery.com` remains an unverified domain candidate.
 **Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages (`basePath: /galerija-omerzel`).
 
 ## Off-box backup (2026-10-02)
@@ -25,4 +25,4 @@
 - Static export is configured for the GitHub Pages project URL. A custom domain needs DNS/hosting configuration and corresponding canonical URL/base-path adjustments; no domain purchase or DNS change without explicit approval.
 - The existing public admin route is intentionally absent from static output; see README/DEPLOYMENT docs, which may contain stale claims.
 
-*Last reviewed: 2026-10-02 (added off-box private backup mirror; the backup path never pushes to `origin`, so backing up never publishes). Earlier 2026-10-01*
+*Last reviewed: 2026-10-06 (homepage refresh and local verification).*
