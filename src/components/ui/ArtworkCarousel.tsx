@@ -53,7 +53,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
       {/* Main Carousel */}
       <motion.div
         ref={carouselRef}
-        className="relative overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 dark:from-navy-800 dark:via-navy-700 dark:to-navy-800"
+        className="relative overflow-hidden rounded-2xl bg-[#24211d] shadow-[0_24px_70px_-30px_rgba(35,28,18,0.55)]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         whileHover={{ scale: 1.02 }}
@@ -66,7 +66,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-burgundy-400 rounded-full blur-2xl animate-pulse delay-500"></div>
         </div>
 
-        <div className="relative h-auto min-h-[660px] sm:min-h-[680px] md:h-[500px] md:min-h-0 flex items-center justify-center p-5 sm:p-6 md:p-8">
+        <div className="relative flex min-h-[480px] items-center justify-center px-5 py-14 sm:min-h-[500px] sm:p-8 md:h-[500px] md:min-h-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}

@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { ArrowRight, MapPin, Clock, Users } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { ArrowRight, MapPin, Clock, Images } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
+import { galleryInfo } from '@/data/gallery'
 import { ArtworkCard } from '@/components/ui/ArtworkCard'
 import { ArtworkModal } from '@/components/ui/ArtworkModal'
 import { ArtworkCarousel } from '@/components/ui/ArtworkCarousel'
@@ -25,219 +25,59 @@ export default function Home() {
     setFeaturedArtworks([...paintings, ...sculptures, ...digital])
   }, [])
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1 }
-  }
-
   return (
     <div className="min-h-screen bg-white dark:bg-navy-900 transition-colors">
-      {/* Artwork Carousel - Moved to Top */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-        className="relative bg-gradient-to-br from-navy-50 via-platinum-50 to-emerald-50 dark:from-navy-800 dark:via-platinum-800 dark:to-emerald-900 py-8 md:py-12 overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center mb-8"
-          >
-            <h1 className="text-3xl md:text-4xl font-bold text-navy-900 dark:text-gold-400 mb-4">
+      {/* Gallery introduction and featured artwork */}
+      <section className="bg-[#f6f3ed] px-4 py-12 sm:px-6 md:py-16 dark:bg-navy-900">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto mb-9 max-w-3xl text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-amber-800 dark:text-gold-400">Bled · Slovenia</p>
+            <h1 className="font-serif text-4xl font-medium tracking-tight text-stone-900 sm:text-5xl md:text-6xl dark:text-white">
               {t('heroTitle')}
             </h1>
-            <p className="text-lg text-navy-700 dark:text-navy-200 max-w-2xl mx-auto">
+            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-stone-600 sm:text-lg dark:text-navy-200">
               {t('heroSubtitle')}
             </p>
-          </motion.div>
-
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Link href="/gallery" className="inline-flex items-center rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-amber-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800">
+                {t('exploreGallery')} <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link href="/contact" className="inline-flex items-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 transition hover:border-stone-500 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 dark:border-navy-500 dark:text-white">
+                Plan your visit
+              </Link>
+            </div>
+          </div>
           <ArtworkCarousel onArtworkClick={setSelectedArtwork} />
         </div>
-      </motion.section>
+      </section>
 
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="relative bg-gradient-to-br from-navy-50 via-platinum-50 to-emerald-50 dark:from-navy-800 dark:via-platinum-800 dark:to-emerald-900 py-12 md:py-20 overflow-hidden"
-      >
-        {/* Animated background elements */}
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute inset-0 opacity-10"
-        >
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 10, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-10 left-4 md:left-10 w-24 h-24 md:w-32 md:h-32 bg-gold-400 rounded-full blur-xl"
-          ></motion.div>
-          <motion.div
-            animate={{
-              y: [0, 15, 0],
-              x: [0, -15, 0],
-            }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
-            className="absolute bottom-10 right-4 md:right-10 w-20 h-20 md:w-24 md:h-24 bg-emerald-400 rounded-full blur-xl"
-          ></motion.div>
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 1
-            }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40 bg-burgundy-400 rounded-full blur-2xl"
-          ></motion.div>
-          <motion.div
-            animate={{
-              y: [0, -10, 0],
-              opacity: [0.3, 0.7, 0.3],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 3
-            }}
-            className="absolute top-1/4 right-1/4 w-16 h-16 md:w-20 md:h-20 bg-platinum-400 rounded-full blur-lg"
-          ></motion.div>
-        </motion.div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="text-center"
-          >
-            <motion.h1
-              variants={itemVariants}
-              className="text-5xl sm:text-6xl font-bold text-navy-900 dark:text-gold-400 mb-6"
-            >
-              Visit our gallery in Bled
-            </motion.h1>
-            <motion.p
-              variants={itemVariants}
-              className="text-xl text-navy-700 dark:text-navy-200 mb-8 max-w-3xl mx-auto"
-            >
-              Browse the collection online or plan a visit to Galerija Omerzel.
-            </motion.p>
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/gallery"
-                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-700 hover:bg-navy-800 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-xl hover:shadow-2xl"
-                >
-                  {t('exploreGallery')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/about"
-                  className="inline-flex items-center px-8 py-3 border border-navy-300 dark:border-gold-400 text-base font-medium rounded-md text-navy-700 dark:text-navy-900 bg-white dark:bg-navy-100 hover:bg-navy-50 dark:hover:bg-navy-200 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  {t('learnMore')}
-                </Link>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Gallery Info */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <MapPin className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Location</h3>
-              <p className="text-gray-600">Bled, Slovenia</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-green-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Clock className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Hours</h3>
-              <p className="text-gray-600">Mon-Sat: 10AM-6PM</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-purple-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Users className="h-8 w-8 text-purple-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Collection</h3>
-              <p className="text-gray-600">{mockArtworks.length}+ Artworks</p>
-            </div>
+      {/* Visit information */}
+      <section className="border-y border-stone-200 bg-white py-8 dark:border-navy-700 dark:bg-navy-800">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 sm:grid-cols-3 sm:gap-10">
+          <div className="flex items-center gap-4 sm:justify-center">
+            <MapPin className="h-5 w-5 shrink-0 text-amber-800" aria-hidden="true" />
+            <div><h2 className="text-sm font-semibold text-stone-900 dark:text-white">Find us</h2><p className="text-sm text-stone-600 dark:text-navy-200">{galleryInfo.address}</p></div>
+          </div>
+          <div className="flex items-center gap-4 sm:justify-center">
+            <Clock className="h-5 w-5 shrink-0 text-amber-800" aria-hidden="true" />
+            <div><h2 className="text-sm font-semibold text-stone-900 dark:text-white">Opening hours</h2><p className="text-sm text-stone-600 dark:text-navy-200">Tue–Fri 10:00–18:00 · Sat 10:00–16:00</p></div>
+          </div>
+          <div className="flex items-center gap-4 sm:justify-center">
+            <Images className="h-5 w-5 shrink-0 text-amber-800" aria-hidden="true" />
+            <div><h2 className="text-sm font-semibold text-stone-900 dark:text-white">Explore the collection</h2><p className="text-sm text-stone-600 dark:text-navy-200">{mockArtworks.length} works to discover</p></div>
           </div>
         </div>
       </section>
 
       {/* Featured Artworks */}
-      <section className="py-16 bg-navy-50 dark:bg-navy-800">
+      <section className="bg-[#f6f3ed] py-16 dark:bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-navy-900 dark:text-gold-400 mb-4">
-              Featured Artworks
+            <h2 className="font-serif text-3xl font-medium text-stone-900 dark:text-white mb-4">
+              Selected works
             </h2>
-            <p className="text-lg text-navy-700 dark:text-navy-200 max-w-2xl mx-auto">
-              Discover a selection of our most captivating pieces, each telling a unique story
-              and bringing beauty to your space.
+            <p className="mx-auto max-w-2xl text-base leading-7 text-stone-600 dark:text-navy-200">
+              Take a closer look at works from the Galerija Omerzel collection.
             </p>
           </div>
 
@@ -270,7 +110,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="font-serif text-3xl font-medium text-stone-900 mb-6">
                 About Galerija Omerzel
               </h2>
               <p className="text-lg text-gray-600 mb-6">
@@ -291,7 +131,7 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
-            <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg p-8">
+            <div className="rounded-2xl border border-stone-200 bg-[#f6f3ed] p-8">
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-blue-600 mb-2">
@@ -324,12 +164,12 @@ export default function Home() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-16 bg-blue-600">
+      <section className="bg-[#342c25] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Interested in a Piece?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-stone-200">
             Contact us for pricing, availability, or to schedule a private viewing. 
             We&apos;re here to help you find the perfect artwork for your space.
           </p>
