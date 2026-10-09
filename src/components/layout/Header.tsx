@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, Globe } from 'lucide-react'
-import { GOLogo } from '@/components/ui/Logo'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useTranslation } from '@/lib/TranslationContext'
 
@@ -31,7 +30,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex min-w-0 items-center gap-2">
-              <GOLogo size="sm" className="shrink-0 sm:h-8 sm:w-8" />
+              <span aria-hidden="true" className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold-400 text-[9px] font-semibold leading-none tracking-[-0.08em] text-gold-400 sm:h-8 sm:w-8 sm:text-[11px]">GO</span>
               <span className="whitespace-nowrap text-base font-bold text-gold-400 sm:text-xl">Galerija Omerzel</span>
             </Link>
           </div>

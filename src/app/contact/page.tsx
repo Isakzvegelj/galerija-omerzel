@@ -2,7 +2,7 @@
 
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { useState } from 'react'
-import { galleryInfo } from '@/data/gallery'
+import { galleryInfo, galleryGoogleMapsEmbedUrl, galleryGoogleMapsUrl } from '@/data/gallery'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -95,11 +95,12 @@ export default function Contact() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-16">
             <div className="p-4 bg-gray-50">
               <h3 className="text-lg font-semibold text-gray-900">Find Us</h3>
-              <p className="text-gray-600">Interactive Map</p>
+              <p className="text-gray-600">Gallery location</p>
             </div>
             <div className="relative w-full h-96 bg-gray-100">
               <iframe
-                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2791.074845102959!2d14.1095!3d46.3695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4764d5f3b3b3b3b3%3A0x1a1a1a1a1a1a1a1a!2s${encodeURIComponent(galleryInfo.address)}!5e0!3m2!1sen!2sus!4v1630000000000`}
+                title={`Map to Galerija Omerzel at ${galleryInfo.address}`}
+                src={galleryGoogleMapsEmbedUrl}
                 width="100%"
                 height="400"
                 style={{ border: 0 }}
@@ -127,7 +128,7 @@ export default function Contact() {
                   {galleryInfo.address}
                 </p>
                 <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(galleryInfo.address)}`}
+                  href={galleryGoogleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -135,6 +136,16 @@ export default function Contact() {
                   Open in Google Maps
                 </a>
               </div>
+            </div>
+            <div className="px-5 py-4 text-center">
+              <a
+                href={galleryGoogleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
+              >
+                Open directions in Google Maps
+              </a>
             </div>
           </div>
         </div>

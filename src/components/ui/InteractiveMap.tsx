@@ -35,7 +35,7 @@ export function InteractiveMap({ address, className = '' }: InteractiveMapProps)
   const [isClient, setIsClient] = useState(false)
   const [mapError, setMapError] = useState(false)
 
-  // Coordinates for Bled, Slovenia (approximate location for Polje 4)
+  // Approximate Bled map center; this is not a verified pin for the gallery address.
   const coordinates: [number, number] = [46.3619, 14.0947]
 
   useEffect(() => {
@@ -110,7 +110,8 @@ export function GoogleMapsEmbed({ address, className = '' }: InteractiveMapProps
     <div className={`rounded-lg overflow-hidden ${className}`}>
       <div className="h-64 w-full">
         <iframe
-          src={`https://www.google.com/maps/embed/v1/place?q=${encodedAddress}`}
+          title={`Map to ${address}`}
+          src={`https://maps.google.com/maps?q=${encodedAddress}&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}

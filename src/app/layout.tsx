@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { HeaderWrapper } from '@/components/layout/HeaderWrapper'
 import { Footer } from '@/components/layout/Footer'
-import { BackgroundMusic } from '@/components/ui/BackgroundMusic'
+import { CallUsNow } from '@/components/ui/CallUsNow'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import { TranslationProvider } from '@/lib/TranslationContext'
 
@@ -44,7 +44,7 @@ export default function RootLayout({
             <HeaderWrapper />
             <main>{children}</main>
             <Footer />
-            <BackgroundMusic />
+            <CallUsNow />
           </ThemeProvider>
         </TranslationProvider>
 

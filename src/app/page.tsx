@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { ArrowRight, MapPin, Clock, Images } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
-import { galleryInfo } from '@/data/gallery'
+import { galleryInfo, galleryGoogleMapsEmbedUrl, galleryGoogleMapsUrl } from '@/data/gallery'
 import { ArtworkCard } from '@/components/ui/ArtworkCard'
 import { ArtworkModal } from '@/components/ui/ArtworkModal'
 import { ArtworkCarousel } from '@/components/ui/ArtworkCarousel'
@@ -56,7 +56,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl gap-6 px-5 sm:grid-cols-3 sm:gap-10">
           <div className="flex items-center gap-4 sm:justify-center">
             <MapPin className="h-5 w-5 shrink-0 text-amber-800" aria-hidden="true" />
-            <div><h2 className="text-sm font-semibold text-stone-900 dark:text-white">Find us</h2><p className="text-sm text-stone-600 dark:text-navy-200">{galleryInfo.address}</p></div>
+            <div><h2 className="text-sm font-semibold text-stone-900 dark:text-white">Find us</h2><a href={galleryGoogleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-stone-600 underline decoration-stone-400 underline-offset-2 hover:text-amber-800 dark:text-navy-200">{galleryInfo.address}</a></div>
           </div>
           <div className="flex items-center gap-4 sm:justify-center">
             <Clock className="h-5 w-5 shrink-0 text-amber-800" aria-hidden="true" />
@@ -180,6 +180,35 @@ export default function Home() {
             Contact Us
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
+        </div>
+      </section>
+
+      {/* Gallery location */}
+      <section className="bg-stone-50 py-16 dark:bg-navy-900">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-8 text-center">
+            <h2 className="font-serif text-3xl font-medium text-stone-900 dark:text-white">Visit us in Bled</h2>
+            <p className="mt-3 text-stone-600 dark:text-navy-200">{galleryInfo.address}</p>
+          </div>
+          <div className="overflow-hidden rounded-2xl bg-white p-3 shadow-lg dark:bg-navy-800">
+            <iframe
+              title={`Map to Galerija Omerzel at ${galleryInfo.address}`}
+              src={galleryGoogleMapsEmbedUrl}
+              className="h-72 w-full rounded-xl border-0 sm:h-96"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+            <div className="px-2 pb-2 pt-4 text-center">
+              <a
+                href={galleryGoogleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
+              >
+                Open directions in Google Maps
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -3,7 +3,7 @@ import { GalleryInfo } from '@/types/artwork';
 export const galleryInfo: GalleryInfo = {
   name: 'Galerija Omerzel',
   fullName: 'Galerija Omerzel / Galerija Bled d.o.o.',
-  address: 'Polje 4, 4260 Bled, Slovenia',
+  address: 'Cesta svobode 19, 4260 Bled, Slovenia',
   phone: '+386 40 855 755',
   email: 'galerija.omerzel@gmail.com',
   description: 'Art gallery located in Bled, Slovenia, showcasing contemporary and traditional artworks from local and international artists.',
@@ -22,4 +22,8 @@ export const galleryInfo: GalleryInfo = {
   }
 };
 
+const mapsQuery = galleryInfo.address;
+const mapsEmbedQuery = 'Cesta svobode 19 Bled Slovenia';
 
+export const galleryGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+export const galleryGoogleMapsEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapsEmbedQuery)}&output=embed`;

@@ -61,7 +61,7 @@ current configuration intentionally uses `output: 'export'`. Deploy the
 ## 🎨 Gallery Information
 
 - **Name**: Galerija Omerzel / Galerija Bled d.o.o.
-- **Location**: Polje 4, 4260 Bled, Slovenia
+- **Location**: Cesta svobode 19, 4260 Bled, Slovenia
 - **Phone**: +386 40 855 755
 - **Email**: galerija.omerzel@gmail.com
 - **Hours**: Tuesday-Friday 10:00-18:00, Saturday 10:00-16:00, Sunday-Monday closed

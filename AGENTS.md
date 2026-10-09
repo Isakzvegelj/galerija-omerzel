@@ -1,8 +1,8 @@
 # omerzel-website
 
 **What:** Galerija Omerzel art-gallery website in Bled, Slovenia. Source: `isakzvegelj/galerija-omerzel`; currently hosted at `https://isakzvegelj.github.io/galerija-omerzel/`.
-**Now:** Preparing the existing GitHub Pages site to use the newly bought `gallerybled.com` domain; custom-domain config is local only pending build verification and explicit publish/DNS approval. Homepage refresh remains complete: warm editorial palette, concise hero, shorter featured-artwork carousel, verified visit details, and no custom cursor. Unverified prices display as “Price on request”.
-**Status:** Branch `main` started at `543ca57`. Existing local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, mobile carousel/header/player refinements, and the 2026-10-06 homepage/palette fixes. `npm run lint` passed before the CSS-only fix (2 pre-existing warnings); `npm run build` passed previously. Custom-domain changes remove the project base path, set the canonical host, and add a Pages `CNAME`; not yet published. Temporary static preview uses Tailscale port 4173.
+**Now:** Reviewing local-only site updates before any publish: homepage Google Maps embed at `Cesta svobode 19, 4260 Bled`, compact header monogram, removed sound bar, and scroll-triggered `Call us now` link to the gallery phone. Do not publish without explicit approval.
+**Status:** Branch `main` contains custom-domain commit `3be9b67` pushed to `origin/main`. Address, homepage map, header, sound-bar removal, and scroll CTA remain local. `gallerybled.com.zone` contains the GitHub Pages DNS records. `npm run build` passes with a temporary Node 20.19.5 runtime in `/tmp`; the current `out/` is a fresh full static build with client scripts enabled. Nothing has been published.
 **Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages at the site root.
 
 ## Off-box backup (2026-10-02)
@@ -25,4 +25,4 @@
 - Static export is configured for the custom domain at the site root. GitHub Pages custom-domain activation still requires repository Pages settings plus Cloudflare DNS records; no publish or DNS change without explicit current-conversation approval.
 - The existing public admin route is intentionally absent from static output; see README/DEPLOYMENT docs, which may contain stale claims.
 
-*Last reviewed: 2026-10-06 (homepage refresh and local verification).*
+*Last reviewed: 2026-10-09 (local address, map, and header fixes).*

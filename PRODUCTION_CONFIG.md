@@ -10,7 +10,7 @@ ADMIN_PASSWORD=your_secure_password_here
 
 # Gallery Information
 NEXT_PUBLIC_GALLERY_NAME=Galerija Omerzel
-NEXT_PUBLIC_GALLERY_ADDRESS=Polje 4, 4260 Bled, Slovenia
+NEXT_PUBLIC_GALLERY_ADDRESS=Cesta svobode 19, 4260 Bled, Slovenia
 NEXT_PUBLIC_GALLERY_PHONE=+386 40 855 755
 NEXT_PUBLIC_GALLERY_EMAIL=galerija.omerzel@gmail.com
 
