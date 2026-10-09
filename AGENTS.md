@@ -1,9 +1,9 @@
 # omerzel-website
 
 **What:** Galerija Omerzel art-gallery website in Bled, Slovenia. Source: `isakzvegelj/galerija-omerzel`; currently hosted at `https://isakzvegelj.github.io/galerija-omerzel/`.
-**Now:** Homepage refresh is complete locally: warm editorial palette, concise hero, shorter featured-artwork carousel, verified visit details, and no custom cursor. Fixed Tailwind v4 not loading the custom palette; navy/gold text and backgrounds now render with intended contrast. Unverified prices display as “Price on request”; nothing published.
-**Status:** Branch `main` started at `543ca57`. Local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, mobile carousel/header/player refinements, and the 2026-10-06 homepage/palette fixes. `npm run lint` passed before the CSS-only fix (2 pre-existing warnings); `npm run build` passes after it. Temporary static preview uses Tailscale port 4173. `bledgallery.com` remains an unverified domain candidate.
-**Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages (`basePath: /galerija-omerzel`).
+**Now:** Preparing the existing GitHub Pages site to use the newly bought `gallerybled.com` domain; custom-domain config is local only pending build verification and explicit publish/DNS approval. Homepage refresh remains complete: warm editorial palette, concise hero, shorter featured-artwork carousel, verified visit details, and no custom cursor. Unverified prices display as “Price on request”.
+**Status:** Branch `main` started at `543ca57`. Existing local work includes visual titles/alt text and matching categories, homepage SEO metadata, removal of a mistakenly listed chat screenshot, price-on-request display, mobile carousel/header/player refinements, and the 2026-10-06 homepage/palette fixes. `npm run lint` passed before the CSS-only fix (2 pre-existing warnings); `npm run build` passed previously. Custom-domain changes remove the project base path, set the canonical host, and add a Pages `CNAME`; not yet published. Temporary static preview uses Tailscale port 4173.
+**Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages at the site root.
 
 ## Off-box backup (2026-10-02)
 - Automatically mirrored to a **private** repo via a remote named `backup` (ssh alias `github-backup`), committed and pushed every 6h by `~/.local/bin/dsh-work-backup`. The 10 files of uncommitted client work are now preserved off-box.
@@ -11,7 +11,7 @@
 
 ## Run & deploy
 - Install with `npm ci`; lint with `npm run lint`; build static export with `npm run build` (outputs `out/`).
-- `npm run dev` runs the local Next dev server (base path applies).
+- `npm run dev` runs the local Next dev server.
 - Publishing is driven by `.github/workflows/deploy.yml` on pushes to `main`; never push/deploy without explicit current-conversation approval.
 
 ## Structure
@@ -22,7 +22,7 @@
 
 ## Gotchas
 - The seed artwork data contains likely invented names, artists, mediums, prices, sizes, and category/image mismatches; do not present guesses as verified facts. Describe visible subject matter in alt text and flag catalogue facts for gallery confirmation.
-- Static export is configured for the GitHub Pages project URL. A custom domain needs DNS/hosting configuration and corresponding canonical URL/base-path adjustments; no domain purchase or DNS change without explicit approval.
+- Static export is configured for the custom domain at the site root. GitHub Pages custom-domain activation still requires repository Pages settings plus Cloudflare DNS records; no publish or DNS change without explicit current-conversation approval.
 - The existing public admin route is intentionally absent from static output; see README/DEPLOYMENT docs, which may contain stale claims.
 
 *Last reviewed: 2026-10-06 (homepage refresh and local verification).*

@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-const BASE_PATH = '/galerija-omerzel'
+const BASE_PATH = ''
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

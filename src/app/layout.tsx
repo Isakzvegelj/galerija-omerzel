@@ -10,6 +10,7 @@ import { TranslationProvider } from '@/lib/TranslationContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://gallerybled.com'),
   title: {
     default: 'Galerija Omerzel | Art Gallery in Bled, Slovenia',
     template: '%s | Galerija Omerzel',
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
   },
   icons: {
-    icon: '/galerija-omerzel/favicon.svg',
+    icon: '/favicon.svg',
   },
 }
 
