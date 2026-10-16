@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gallerybled.com/sitemap.xml

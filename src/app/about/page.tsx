@@ -1,8 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image';
 import { galleryInfo, galleryGoogleMapsEmbedUrl, galleryGoogleMapsUrl } from '@/data/gallery';
-import { assetPath } from '@/lib/utils';
 
 export default function About() {
   return (
@@ -33,7 +31,7 @@ export default function About() {
       {/* Our Story */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="mx-auto max-w-3xl">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Our Story
@@ -71,18 +69,7 @@ export default function About() {
               Founder & Curator
             </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="relative h-80 bg-gray-100 rounded-lg overflow-hidden">
-                <Image
-                  src={assetPath("/images/owner-portrait.jpg")}
-                  alt="Anton Omerzel, Founder of Galerija Omerzel"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-            </div>
+          <div className="mx-auto max-w-3xl">
             <div className="order-1 lg:order-2">
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 As the founder and curator of Galerija Omerzel, Anton brings decades of experience in the art world. His journey began with a deep appreciation for Slovenian cultural heritage and has evolved into a
