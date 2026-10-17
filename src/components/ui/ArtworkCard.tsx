@@ -49,6 +49,7 @@ export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
             src={assetPath(primaryImage.url)}
             alt={primaryImage.alt}
             fill
+            deferUntilVisible
             priority={false}
             loading="lazy"
             className={`object-cover transition-all duration-500 ${

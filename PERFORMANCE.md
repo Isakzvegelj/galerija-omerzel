@@ -1,6 +1,6 @@
 # October 17 performance changes
 
-Artwork cards and carousel thumbnails use checked-in WebP variants with real width descriptors. `ArtworkImage` selects these without a server-side Next image optimizer. Detailed modal views retain the original photographs. Run `npm ci` and `npm run images` (Node 20.11+) after adding or changing photographs, review image quality, and commit both the variants and `src/data/image-variants.json`. The static export remains `npm run build`.
+Artwork cards and carousel thumbnails use checked-in WebP variants with real width descriptors. `ArtworkImage` selects these without a server-side Next image optimizer. Card photographs start loading only when their card comes within 240px of the viewport, rather than the browser's much larger native lazy-load threshold. Detailed modal views retain the original photographs. Run `npm ci` and `npm run images` (Node 20.11+) after adding or changing photographs, review image quality, and commit both the variants and `src/data/image-variants.json`. The static export remains `npm run build`.
 
 The carousel renders its first photograph and text immediately. Playback starts only when requested, pauses on focus/hover, and is disabled when reduced motion is preferred. Previous/next and thumbnail selection remain available.
 
