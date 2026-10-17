@@ -83,9 +83,9 @@ export function ContactForm() {
     return (
       <div className="text-center py-8">
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Thank You!</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</h3>
         <p className="text-gray-600 mb-4">
-          Your email app should now be open with your message ready to send. We&apos;ll get back to you within 24 hours.
+          Your email app should open with a draft. Send it there to complete your enquiry. If it does not open, email galerija.omerzel@gmail.com directly.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
@@ -207,18 +207,18 @@ export function ContactForm() {
         {isSubmitting ? (
           <>
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-            Sending...
+            Preparing email...
           </>
         ) : (
           <>
             <Send className="h-5 w-5 mr-2" />
-            Send Message
+            Prepare Email Enquiry
           </>
         )}
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        * Required fields. We&apos;ll respond to your inquiry within 24 hours.
+        * Required fields. This opens a draft in your email app; you still need to send it.
       </p>
     </form>
   )

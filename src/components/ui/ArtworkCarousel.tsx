@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
 import { Artwork } from '@/types/artwork'
 import { formatPrice, assetPath } from '@/lib/utils'
-import Image from 'next/image'
+import { ArtworkImage as Image } from './ArtworkImage'
 
 interface ArtworkCarouselProps {
   onArtworkClick?: (artwork: Artwork) => void
@@ -14,24 +14,26 @@ interface ArtworkCarouselProps {
 
 export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [isPaused, setIsExpanded] = useState(false)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const [reduceMotion, setReduceMotion] = useState(false)
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updatePreference = () => setReduceMotion(preference.matches)
+    updatePreference()
+    preference.addEventListener('change', updatePreference)
+    return () => preference.removeEventListener('change', updatePreference)
+  }, [])
   const carouselRef = useRef<HTMLDivElement>(null)
 
-  // Auto-play functionality with smoother transitions
+  // Start only on request; keep artwork still while reading, focusing or hovering.
   useEffect(() => {
-    if (!isAutoPlaying || isPaused || window.matchMedia('(max-width: 767px)').matches) return
-
+    if (!isAutoPlaying || isHovered || reduceMotion) return
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % mockArtworks.length)
-    }, 4000) // Slightly longer for smoother experience
-
+      if (!document.hidden) setCurrentIndex(prev => (prev + 1) % mockArtworks.length)
+    }, 4000)
     return () => clearInterval(interval)
-  }, [isAutoPlaying, isPaused])
-
-  // Pause on hover
-  const handleMouseEnter = () => setIsAutoPlaying(false)
-  const handleMouseLeave = () => setIsAutoPlaying(true)
+  }, [isAutoPlaying, isHovered, reduceMotion])
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % mockArtworks.length)
@@ -54,8 +56,9 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
       <motion.div
         ref={carouselRef}
         className="relative overflow-hidden rounded-2xl bg-[#24211d] shadow-[0_24px_70px_-30px_rgba(35,28,18,0.55)]"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocusCapture={() => setIsAutoPlaying(false)}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
@@ -67,16 +70,15 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
         </div>
 
         <div className="relative flex min-h-[480px] items-center justify-center px-5 py-14 sm:min-h-[500px] sm:p-8 md:h-[500px] md:min-h-0">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, scale: 0.9, rotateY: -45, filter: "blur(10px)" }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.9, rotateY: 45, filter: "blur(10px)" }}
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{
-                duration: 0.8,
+                duration: reduceMotion ? 0 : 0.2,
                 ease: [0.25, 0.46, 0.45, 0.94],
-                filter: { duration: 0.4 }
               }}
               className="flex flex-col md:flex-row items-center space-y-4 sm:space-y-6 md:space-y-0 md:space-x-8 w-full max-w-4xl"
             >
@@ -93,15 +95,15 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                     alt={primaryImage.alt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 90vw, (max-width: 768px) 70vw, (max-width: 1200px) 50vw, 33vw"
-                    priority
+                    sizes="(max-width: 639px) 224px, (max-width: 767px) 256px, 320px"
+                    priority={currentIndex === 0}
                   />
                 )}
 
                 {/* Price Overlay */}
                 {currentArtwork.isAvailable && (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     className="absolute bottom-3 left-1/2 -translate-x-1/2 max-w-[calc(100%-2rem)] bg-gold-600 text-navy-900 px-3 py-1 rounded-full font-bold text-xs sm:text-sm shadow-lg"
@@ -113,7 +115,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                 {/* Sold Overlay */}
                 {!currentArtwork.isAvailable && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={false}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3, type: "spring" }}
                     className="absolute inset-0 bg-black/70 flex items-center justify-center"
@@ -127,24 +129,24 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
 
               {/* Artwork Info */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
+                initial={false}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
                 className="text-center md:text-left max-w-md"
               >
-                <motion.h3
+                <motion.h2
                   className="text-2xl md:text-3xl font-bold text-gold-400 mb-2"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
                   {currentArtwork.title}
-                </motion.h3>
+                </motion.h2>
 
                 {currentArtwork.artist !== 'Contemporary Slovenian Artist' && (
                   <motion.p
                     className="text-lg text-navy-200 mb-4"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
@@ -154,7 +156,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
 
                 <motion.p
                   className="text-sm text-navy-300"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
                 >
@@ -162,7 +164,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                 </motion.p>
 
                 <motion.button
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
                   whileHover={{ scale: 1.05 }}
@@ -198,15 +200,17 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
           <ChevronRight className="h-6 w-6" />
         </motion.button>
 
-        {/* Expand/Collapse Button */}
+        {/* Optional slideshow playback */}
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setIsExpanded(!isPaused)}
-          aria-label={isPaused ? 'Resume slideshow' : 'Pause slideshow'}
+          onClick={() => setIsAutoPlaying(playing => !playing)}
+          disabled={!!reduceMotion}
+          aria-label={reduceMotion ? 'Slideshow paused for reduced motion' : isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
+          aria-pressed={isAutoPlaying && !reduceMotion}
           className="absolute top-4 right-4 p-2 bg-navy-800/80 hover:bg-navy-700 text-gold-400 rounded-full shadow-lg backdrop-blur-sm border border-gold-500/20 z-10"
         >
-          {isPaused ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+          {!isAutoPlaying || reduceMotion ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
         </motion.button>
       </motion.div>
 
@@ -234,7 +238,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                   alt={artwork.title}
                   fill
                   className="object-cover"
-                  sizes="64px"
+                  sizes="(max-width: 639px) 48px, 64px"
                 />
               )}
               {index === currentIndex && (

@@ -1,8 +1,8 @@
 # omerzel-website
 
-**What:** Galerija Omerzel art-gallery website in Bled, Slovenia. Source: `isakzvegelj/galerija-omerzel`; currently hosted at `https://isakzvegelj.github.io/galerija-omerzel/`.
-**Now:** Reviewing local-only site updates before any publish: homepage Google Maps embed at `Cesta svobode 19, 4260 Bled`, compact header monogram, removed sound bar, and scroll-triggered `Call us now` link to the gallery phone. Do not publish without explicit approval.
-**Status:** Branch `main` contains custom-domain commit `3be9b67` pushed to `origin/main`. Address, homepage map, header, sound-bar removal, and scroll CTA remain local. `gallerybled.com.zone` contains the GitHub Pages DNS records. `npm run build` passes with a temporary Node 20.19.5 runtime in `/tmp`; the current `out/` is a fresh full static build with client scripts enabled. Nothing has been published.
+**What:** Galerija Omerzel art-gallery website in Bled, Slovenia. Source: `isakzvegelj/galerija-omerzel`; live at `https://gallerybled.com/`.
+**Now:** The October 17 SEO release is live. The next performance release uses generated responsive artwork images, an opt-in carousel and explicit email-draft enquiry handoffs. Keep catalogue facts subject to gallery confirmation.
+**Status:** GitHub Pages publishes `main` through `.github/workflows/deploy.yml`. The current-conversation performance work starts from `f11161f`. Build output is `out/`; do not treat older local-only notes as current publication status. Publishing still requires explicit current-conversation approval.
 **Stack:** Next.js 15 App Router, TypeScript, Tailwind CSS; static export for GitHub Pages at the site root.
 
 ## Off-box backup (2026-10-02)
@@ -18,11 +18,12 @@
 - `src/data/artworks.ts`: artwork titles, descriptions, metadata, image alt text, and local image paths.
 - `src/data/gallery.ts`: gallery identity and contact details.
 - `src/app/`: homepage and gallery/about/contact pages; root SEO metadata in `src/app/layout.tsx`.
-- `public/images/artworks/cropped/`: gallery photographs.
+- `public/images/artworks/cropped/`: original gallery photographs, retained for detailed views.
+- `public/images/artworks/responsive/`, `src/data/image-variants.json`: committed variants used by `ArtworkImage`; regenerate with `npm run images` after changing photos. See `PERFORMANCE.md`.
 
 ## Gotchas
 - The seed artwork data contains likely invented names, artists, mediums, prices, sizes, and category/image mismatches; do not present guesses as verified facts. Describe visible subject matter in alt text and flag catalogue facts for gallery confirmation.
 - Static export is configured for the custom domain at the site root. GitHub Pages custom-domain activation still requires repository Pages settings plus Cloudflare DNS records; no publish or DNS change without explicit current-conversation approval.
 - The existing public admin route is intentionally absent from static output; see README/DEPLOYMENT docs, which may contain stale claims.
 
-*Last reviewed: 2026-10-09 (local address, map, and header fixes).*
+*Last reviewed: 2026-10-17 (performance release).*

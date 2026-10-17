@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { X, Send, CheckCircle } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
+import { assetPath } from '@/lib/utils'
 
 interface ArtworkInquiryModalProps {
   artwork: Artwork | null
@@ -73,9 +74,12 @@ export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiry
       `Email: ${formData.email}`,
       `Phone: ${formData.phone || 'Not provided'}`,
       '',
+      `Artwork reference: ${artwork?.id}`,
+      `Photograph: https://gallerybled.com${assetPath(artwork?.images[0]?.url || '')}`,
+      '',
       formData.message || defaultMessage,
     ].join('\n')
-    const subject = `Artwork inquiry: ${artwork?.title || 'Artwork'}`
+    const subject = `Artwork inquiry: ${artwork?.id || 'Artwork'}`
 
     window.location.href = `mailto:galerija.omerzel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     setIsSubmitted(true)
@@ -102,7 +106,7 @@ export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiry
 
   const defaultMessage = `Hello,
 
-I'm interested in learning more about "${artwork.title}" by ${artwork.artist}.
+I'm interested in learning more about the photographed work "${artwork.title}" (reference: ${artwork.id}).
 
 Could you please provide more information about:
 - Availability
@@ -129,9 +133,9 @@ ${formData.name || '[Your Name]'}`
 
           <div className="text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Inquiry Sent!</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</h3>
             <p className="text-gray-600 mb-6">
-              Thank you for your interest in &ldquo;{artwork.title}&rdquo;. We&apos;ll get back to you within 24 hours with more information.
+              Your email app should open with the artwork reference and your message. Send the email there to complete your enquiry. If it does not open, email galerija.omerzel@gmail.com and include reference {artwork.id}.
             </p>
             <button
               onClick={handleClose}
@@ -262,18 +266,18 @@ ${formData.name || '[Your Name]'}`
               {isSubmitting ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Sending Inquiry...
+                  Preparing email...
                 </>
               ) : (
                 <>
                   <Send className="h-5 w-5 mr-2" />
-                  Send Inquiry
+                  Prepare Email Enquiry
                 </>
               )}
             </button>
 
             <p className="text-xs text-gray-500 text-center">
-              * Required fields. We&apos;ll respond to your inquiry within 24 hours.
+              * Required fields. This opens a draft in your email app; you still need to send it.
             </p>
           </form>
         </div>

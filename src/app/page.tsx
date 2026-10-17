@@ -140,7 +140,7 @@ export default function Home() {
                   <div className="text-gray-600">Paintings</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">
+                  <div className="text-3xl font-bold text-green-700 mb-2">
                     {mockArtworks.filter(a => a.category === 'sculpture').length}
                   </div>
                   <div className="text-gray-600">Sculptures</div>

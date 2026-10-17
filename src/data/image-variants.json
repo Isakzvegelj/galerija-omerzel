@@ -1,0 +1,430 @@
+{
+  "/images/artworks/cropped/sculpture_IMG_8390.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8390-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8390-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8390-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/sculpture_IMG_8390-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/sculpture_IMG_8390-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8395.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8395-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8395-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8395-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/sculpture_IMG_8395-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8406.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8406-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8406-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8406-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/sculpture_IMG_8406-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8407.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8407-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8407-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8407-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/sculpture_IMG_8407-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8410.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8410-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8410-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8410-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/sculpture_IMG_8410-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8400.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8400-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8400-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8400-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8400-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8420.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8420-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8420-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8420-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8420-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8450.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8450-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8450-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8450-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/painting_IMG_8450-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/painting_IMG_8450-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8393.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8393-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8393-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8393-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/painting_IMG_8393-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/painting_IMG_8393-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8392.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8392-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8392-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8392-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/painting_IMG_8392-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/painting_IMG_8392-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8394.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8394-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8394-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8394-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/painting_IMG_8394-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/painting_IMG_8394-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8396.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8396-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8396-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8396-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8396-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8399.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8399-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8399-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8399-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8399-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8401.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8401-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8401-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8401-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8401-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8402.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8402-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8402-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8402-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8402-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8403.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8403-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8403-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8403-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8403-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8404.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8404-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8404-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8404-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8404-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/painting_IMG_8405.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/painting_IMG_8405-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/painting_IMG_8405-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/painting_IMG_8405-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/painting_IMG_8405-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8397.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8397-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8397-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8397-640.webp"
+    },
+    {
+      "width": 900,
+      "url": "/images/artworks/responsive/sculpture_IMG_8397-900.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8398.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8398-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8398-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8398-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/sculpture_IMG_8398-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/sculpture_IMG_8398-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8411.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8411-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8411-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8411-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/sculpture_IMG_8411-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/sculpture_IMG_8411-1200.webp"
+    }
+  ],
+  "/images/artworks/cropped/sculpture_IMG_8413.jpeg": [
+    {
+      "width": 128,
+      "url": "/images/artworks/responsive/sculpture_IMG_8413-128.webp"
+    },
+    {
+      "width": 320,
+      "url": "/images/artworks/responsive/sculpture_IMG_8413-320.webp"
+    },
+    {
+      "width": 640,
+      "url": "/images/artworks/responsive/sculpture_IMG_8413-640.webp"
+    },
+    {
+      "width": 960,
+      "url": "/images/artworks/responsive/sculpture_IMG_8413-960.webp"
+    },
+    {
+      "width": 1200,
+      "url": "/images/artworks/responsive/sculpture_IMG_8413-1200.webp"
+    }
+  ]
+}
