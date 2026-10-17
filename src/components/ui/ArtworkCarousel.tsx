@@ -16,6 +16,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -28,12 +29,12 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
 
   // Start only on request; keep artwork still while reading, focusing or hovering.
   useEffect(() => {
-    if (!isAutoPlaying || isHovered || reduceMotion) return
+    if (!isAutoPlaying || isHovered || isFocused || reduceMotion) return
     const interval = setInterval(() => {
       if (!document.hidden) setCurrentIndex(prev => (prev + 1) % mockArtworks.length)
     }, 4000)
     return () => clearInterval(interval)
-  }, [isAutoPlaying, isHovered, reduceMotion])
+  }, [isAutoPlaying, isHovered, isFocused, reduceMotion])
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % mockArtworks.length)
@@ -58,7 +59,10 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
         className="relative overflow-hidden rounded-2xl bg-[#24211d] shadow-[0_24px_70px_-30px_rgba(35,28,18,0.55)]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onFocusCapture={() => setIsAutoPlaying(false)}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlurCapture={event => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false)
+        }}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
