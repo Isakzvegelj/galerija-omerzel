@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { HeaderWrapper } from '@/components/layout/HeaderWrapper'
@@ -48,6 +49,11 @@ export default function RootLayout({
           </ThemeProvider>
         </TranslationProvider>
 
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          strategy="afterInteractive"
+          data-cf-beacon='{"token":"bd64330829da4666868de6916073c976"}'
+        />
       </body>
     </html>
   )
