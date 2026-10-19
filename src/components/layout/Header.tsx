@@ -14,7 +14,6 @@ export function Header() {
     { name: t('home'), href: '/' },
     { name: t('gallery'), href: '/gallery' },
     { name: t('about'), href: '/about' },
-    { name: t('videos'), href: '/videos' },
     { name: t('contact'), href: '/contact' },
   ]
 

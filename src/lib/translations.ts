@@ -5,7 +5,6 @@ export const translations = {
     gallery: 'Gallery',
     about: 'About',
     contact: 'Contact',
-    videos: 'Videos',
 
     // Hero Section
     heroTitle: 'Galerija Omerzel',
@@ -109,7 +108,6 @@ export const translations = {
     gallery: 'Galerija',
     about: 'O nas',
     contact: 'Kontakt',
-    videos: 'Videi',
 
     // Hero Section
     heroTitle: 'Galerija Omerzel',
