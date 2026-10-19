@@ -18,7 +18,7 @@ export default function About() {
             <div className="flex justify-center">
               <Link 
                 href="/gallery"
-                className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                className="hover-action inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
               >
                 Explore Our Collection
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -83,7 +83,7 @@ export default function About() {
               <div className="flex space-x-4">
                 <Link 
                   href="/contact"
-                  className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:bg-navy-800 dark:hover:bg-navy-700"
+                  className="hover-action inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:bg-navy-800 dark:hover:bg-navy-700"
                 >
                   Contact Anton
                 </Link>
@@ -184,7 +184,7 @@ export default function About() {
                 href={galleryGoogleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
+                className="hover-action inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
               >
                 Open directions in Google Maps
               </a>
@@ -205,14 +205,14 @@ export default function About() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/gallery"
-              className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors dark:bg-navy-800 dark:hover:bg-navy-700"
+              className="hover-action inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors dark:bg-navy-800 dark:hover:bg-navy-700"
             >
               Browse Collection
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link 
               href="/contact"
-              className="inline-flex items-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-blue-600 transition-colors"
+              className="hover-action inline-flex items-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-blue-600 transition-colors"
             >
               Contact Us
             </Link>

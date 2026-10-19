@@ -39,10 +39,10 @@ export default function Home() {
               {t('heroSubtitle')}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link href="/gallery" className="inline-flex items-center rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-amber-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800">
+              <Link href="/gallery" className="hover-action inline-flex items-center rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-amber-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800">
                 {t('exploreGallery')} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link href="/contact" className="inline-flex items-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 transition hover:border-stone-500 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 dark:border-navy-500 dark:text-white">
+              <Link href="/contact" className="hover-action inline-flex items-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 transition hover:border-stone-500 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 dark:border-navy-500 dark:text-white">
                 Plan your visit
               </Link>
             </div>
@@ -95,7 +95,7 @@ export default function Home() {
           <div className="text-center">
             <Link
               href="/gallery"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-600 hover:bg-navy-700 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="hover-action inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-navy-600 hover:bg-navy-700 dark:bg-gold-600 dark:hover:bg-gold-700 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               View Full Gallery
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -125,7 +125,7 @@ export default function Home() {
               </p>
               <Link 
                 href="/about"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="hover-action inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
               >
                 Learn More About Us
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -175,7 +175,7 @@ export default function Home() {
           </p>
           <Link 
             href="/contact"
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
+            className="hover-action inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors"
           >
             Contact Us
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -203,7 +203,7 @@ export default function Home() {
                 href={galleryGoogleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
+                className="hover-action inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
               >
                 Open directions in Google Maps
               </a>

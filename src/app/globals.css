@@ -237,3 +237,81 @@ html {
     transition: none;
   }
 }
+
+/* Shared hover feedback: animate only for precise pointers and normal motion. */
+.hover-nav {
+  position: relative;
+}
+.hover-nav::after {
+  content: '';
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.3rem;
+  left: 0.75rem;
+  height: 2px;
+  background: #d4af37;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hover-nav:focus-visible::after {
+  transform: scaleX(1);
+}
+.hover-action:focus-visible,
+.hover-contact:focus-visible,
+.hover-nav:focus-visible,
+.artwork-card:focus-visible {
+  outline: 2px solid #b45309;
+  outline-offset: 4px;
+}
+.dark :is(.hover-action, .hover-contact, .hover-nav, .artwork-card):focus-visible,
+header .hover-nav:focus-visible {
+  outline-color: #facc15;
+}
+.artwork-card-arrow {
+  opacity: 0;
+}
+.artwork-card:focus-visible .artwork-card-arrow {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hover-nav:hover::after { transform: scaleX(1); }
+  .artwork-card:hover .artwork-card-arrow { opacity: 1; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hover-nav::after { transition: transform 200ms ease; }
+  .hover-action {
+    transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, color 200ms ease;
+  }
+  .hover-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -10px rgb(180 130 40 / 45%);
+  }
+  .hover-action svg, .hover-contact svg {
+    transition: transform 200ms ease;
+  }
+  .hover-action:hover svg { transform: translateX(3px); }
+  .hover-contact:hover > svg { transform: translate(2px, -2px); }
+  .artwork-card {
+    transition: transform 240ms ease, box-shadow 240ms ease;
+  }
+  .artwork-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px -12px rgb(15 23 42 / 35%), 0 0 0 1px rgb(212 175 55 / 50%);
+  }
+  .dark .artwork-card:hover {
+    box-shadow: 0 14px 30px -12px rgb(0 0 0 / 65%), 0 0 0 1px rgb(212 175 55 / 65%);
+  }
+  .artwork-card-image { transition: transform 400ms ease, opacity 240ms ease; }
+  .artwork-card:hover .artwork-card-image { transform: scale(1.035); }
+  .artwork-card-arrow {
+    transform: translate(-3px, 3px);
+    transition: opacity 200ms ease, transform 240ms ease;
+  }
+  .artwork-card:hover .artwork-card-arrow { transform: translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-action, .hover-contact, .hover-nav::after, .hover-action svg, .hover-contact svg,
+  .artwork-card, .artwork-card-image, .artwork-card-arrow {
+    transition: none !important;
+  }
+}

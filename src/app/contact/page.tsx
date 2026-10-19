@@ -25,7 +25,7 @@ export default function Contact() {
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-10 sm:px-8 sm:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
         <div>
           <div className="divide-y divide-stone-200 dark:divide-navy-600">
-            {links.map(({ icon: Icon, title, detail, href }) => <a key={href} href={href} {...(href.startsWith('https') ? {target: '_blank', rel: 'noopener noreferrer'} : {})} className="group flex items-start gap-4 py-6 first:pt-0">
+            {links.map(({ icon: Icon, title, detail, href }) => <a key={href} href={href} {...(href.startsWith('https') ? {target: '_blank', rel: 'noopener noreferrer'} : {})} className="hover-contact group flex items-start gap-4 py-6 first:pt-0">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-stone-300 bg-white transition group-hover:border-amber-800 dark:border-navy-600 dark:bg-navy-800"><Icon className="h-5 w-5 text-amber-900 dark:text-gold-300" aria-hidden="true" /></span>
               <span className="min-w-0 flex-1"><span className="block text-sm text-stone-500 dark:text-stone-300">{title}</span><span className="mt-1 block break-words text-base font-medium group-hover:underline sm:text-lg">{detail}</span></span>
               <ArrowUpRight className="mt-3 h-4 w-4 shrink-0 text-stone-500 dark:text-stone-300" aria-hidden="true" />

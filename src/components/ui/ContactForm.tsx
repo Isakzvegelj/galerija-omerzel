@@ -55,7 +55,7 @@ export function ContactForm() {
         <input id="contact-phone" name="phone" type="tel" autoComplete="tel" maxLength={60} value={data.phone} onChange={update} className={input} /></div>
       <div><label htmlFor="contact-message" className={label}>{c.message} *</label>
         <textarea id="contact-message" name="message" rows={5} required maxLength={3000} value={data.message} onChange={update} onInput={event => event.currentTarget.setCustomValidity('')} placeholder={c.placeholder} className={input} /></div>
-      <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-900 px-5 py-3 font-medium text-white transition hover:bg-navy-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800 dark:bg-gold-400 dark:text-navy-900 dark:hover:bg-gold-300">
+      <button type="submit" className="hover-action flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-900 px-5 py-3 font-medium text-white transition hover:bg-navy-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800 dark:bg-gold-400 dark:text-navy-900 dark:hover:bg-gold-300">
         {c.prepare}<ArrowUpRight aria-hidden="true" className="h-4 w-4" />
       </button>
       <p className="text-sm text-stone-600 dark:text-stone-300">{c.hint}</p>
