@@ -82,7 +82,7 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
       />
 
       {/* Modal Content */}
-      <div className="relative max-w-6xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative max-w-6xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden dark:bg-navy-800">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -94,13 +94,13 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
 
         <div className="flex flex-col lg:flex-row">
           {/* Image Section */}
-          <div className="relative lg:w-2/3 bg-gray-100">
+          <div className="relative lg:w-2/3 bg-gray-100 dark:bg-navy-800">
             <div className="relative aspect-square lg:aspect-auto lg:h-[70vh]">
               {imageError ? (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
                   <div className="text-center">
                     <span className="text-6xl mb-4 block">🎨</span>
-                    <span className="text-lg text-gray-500">{artwork.title}</span>
+                    <span className="text-lg text-gray-500 dark:text-stone-300">{artwork.title}</span>
                   </div>
                 </div>
               ) : (
@@ -153,11 +153,11 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
             <div className="space-y-6">
               {/* Title and Artist */}
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2 dark:text-stone-100">
                   {artwork.title}
                 </h2>
                 {artwork.artist !== 'Contemporary Slovenian Artist' && (
-                  <p className="text-lg text-gray-600">
+                  <p className="text-lg text-gray-600 dark:text-stone-300">
                     by {artwork.artist}
                   </p>
                 )}
@@ -165,7 +165,7 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
 
               {/* Price */}
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold text-gray-900">
+                <span className="text-xl font-bold text-gray-900 dark:text-stone-100">
                   {artwork.price ? formatPrice(artwork.price, artwork.currency) : 'Price on request'}
                 </span>
                 {!artwork.isAvailable && (
@@ -175,7 +175,7 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
                 )}
               </div>
 
-              <div className="space-y-2 text-sm text-gray-600">
+              <div className="space-y-2 text-sm text-gray-600 dark:text-stone-300">
                 <p>Category: {getCategoryLabel(artwork.category)}</p>
                 <p>Ask the gallery for confirmed artist, date, medium, dimensions, and provenance.</p>
               </div>
@@ -189,7 +189,7 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
                   >
                     Inquire About This Artwork
                   </button>
-                  <p className="text-xs text-gray-500 mt-2 text-center">
+                  <p className="text-xs text-gray-500 mt-2 text-center dark:text-stone-300">
                     Contact us for pricing and availability
                   </p>
                 </div>

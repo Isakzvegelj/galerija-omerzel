@@ -2,15 +2,15 @@ import Link from 'next/link'
 
 export default function Videos() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-navy-900">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20">
+      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20 dark:from-navy-900 dark:to-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 dark:text-stone-100">
               Video Gallery
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto dark:text-stone-300">
               Watch our featured videos showcasing the artists, exhibitions, and behind-the-scenes of Galerija Omerzel.
             </p>
           </div>
@@ -18,12 +18,12 @@ export default function Videos() {
       </section>
 
       {/* Videos Grid */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Video 1 */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gray-200">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden dark:bg-navy-800">
+              <div className="aspect-video bg-gray-200 dark:bg-navy-800">
                 <iframe
                   src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                   title="Gallery Tour - Bled Art Exhibition"
@@ -33,13 +33,13 @@ export default function Videos() {
                 ></iframe>
               </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-stone-100">
                   Gallery Tour - Spring Exhibition 2024
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-4 dark:text-stone-300">
                   Take a virtual tour of our latest exhibition featuring contemporary Slovenian artists.
                 </p>
-                <div className="flex items-center text-sm text-gray-500">
+                <div className="flex items-center text-sm text-gray-500 dark:text-stone-300">
                   <span>5 min • 2K views</span>
                 </div>
               </div>
@@ -50,16 +50,16 @@ export default function Videos() {
 
           {/* CTA */}
           <div className="text-center mt-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 dark:text-stone-100">
               More Videos Coming Soon
             </h3>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-600 mb-8 dark:text-stone-300">
               Subscribe to our channel for the latest videos about our artists, exhibitions, and gallery events.
             </p>
             <div className="flex justify-center space-x-4">
               <a
                 href="https://www.youtube.com"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:bg-navy-800 dark:hover:bg-navy-700"
               >
                 Visit YouTube Channel
               </a>

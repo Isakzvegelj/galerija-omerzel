@@ -125,10 +125,10 @@ ${formData.name || '[Your Name]'}`
   if (isSubmitted) {
     return (
       <Dialog open={isOpen} onClose={handleClose} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <DialogPanel className="relative max-w-md w-full bg-white rounded-lg shadow-2xl p-8">
+        <DialogPanel className="relative max-w-md w-full bg-white rounded-lg shadow-2xl p-8 dark:bg-navy-800">
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors dark:text-stone-300"
             aria-label="Close modal"
           >
             <X className="h-5 w-5" />
@@ -136,8 +136,8 @@ ${formData.name || '[Your Name]'}`
 
           <div className="text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <DialogTitle className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</DialogTitle>
-            <p className="text-gray-600 mb-6">
+            <DialogTitle className="text-xl font-semibold text-gray-900 mb-2 dark:text-stone-100">Email Draft Ready</DialogTitle>
+            <p className="text-gray-600 mb-6 dark:text-stone-300">
               Your email app should open with the artwork reference and your message. Send the email there to complete your enquiry. If it does not open, email <a href={`mailto:${galleryInfo.email}`} className="break-all underline">{galleryInfo.email}</a> and include reference {artwork.id}.
             </p>
             <button
@@ -161,19 +161,19 @@ ${formData.name || '[Your Name]'}`
       />
 
       {/* Modal Content */}
-      <DialogPanel className="relative max-w-2xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
+      <DialogPanel className="relative max-w-2xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden dark:bg-navy-800">
         {/* Header */}
-        <div className="bg-gray-50 px-6 py-4 border-b">
+        <div className="bg-gray-50 px-6 py-4 border-b dark:bg-navy-800">
           <div className="flex items-center justify-between">
             <div>
-              <DialogTitle className="text-xl font-semibold text-gray-900">Inquire About Artwork</DialogTitle>
-              <p className="text-sm text-gray-600 mt-1">
+              <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-stone-100">Inquire About Artwork</DialogTitle>
+              <p className="text-sm text-gray-600 mt-1 dark:text-stone-300">
                 &ldquo;{artwork.title}&rdquo; by {artwork.artist}
               </p>
             </div>
             <button
               onClick={handleClose}
-              className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-2 text-gray-400 hover:text-gray-600 transition-colors dark:text-stone-300"
               aria-label="Close modal"
             >
               <X className="h-5 w-5" />
@@ -186,7 +186,7 @@ ${formData.name || '[Your Name]'}`
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
                   Name *
                 </label>
                 <input
@@ -197,7 +197,7 @@ ${formData.name || '[Your Name]'}`
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.name ? 'border-red-300' : 'border-gray-300'
                   }`}
                   placeholder="Your full name"
@@ -208,7 +208,7 @@ ${formData.name || '[Your Name]'}`
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
                   Email *
                 </label>
                 <input
@@ -219,7 +219,7 @@ ${formData.name || '[Your Name]'}`
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
                   placeholder="your.email@example.com"
@@ -231,7 +231,7 @@ ${formData.name || '[Your Name]'}`
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
                 Phone (optional)
               </label>
               <input
@@ -241,13 +241,13 @@ ${formData.name || '[Your Name]'}`
                 autoComplete="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-navy-600"
                 placeholder="+386 XX XXX XXX"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
                 Message *
               </label>
               <textarea
@@ -256,7 +256,7 @@ ${formData.name || '[Your Name]'}`
                 rows={8}
                 value={formData.message || defaultMessage}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                   errors.message ? 'border-red-300' : 'border-gray-300'
                 }`}
                 placeholder="Tell us about your interest in this artwork..."
@@ -284,7 +284,7 @@ ${formData.name || '[Your Name]'}`
               )}
             </button>
 
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-gray-500 text-center dark:text-stone-300">
               * Required fields. This opens a draft in your email app; you still need to send it.
             </p>
           </form>

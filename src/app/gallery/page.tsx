@@ -64,15 +64,15 @@ export default function Gallery() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-navy-900">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20">
+      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20 dark:from-navy-900 dark:to-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 dark:text-stone-100">
               Our Gallery
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto dark:text-stone-300">
               Discover our curated collection of contemporary and traditional artworks. Each piece tells a unique story and brings beauty to your space.
             </p>
           </div>
@@ -80,13 +80,13 @@ export default function Gallery() {
       </section>
 
       {/* Filters and Search */}
-      <section className="py-8 bg-white">
+      <section className="py-8 bg-white dark:bg-navy-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row justify-between items-center mb-8">
             <div className="flex items-center space-x-4 mb-4 lg:mb-0">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:hover:bg-navy-700"
               >
                 <Filter className="h-4 w-4 mr-2" />
                 Filters
@@ -98,7 +98,7 @@ export default function Gallery() {
               </button>
               <button
                 onClick={clearFilters}
-                className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:hover:bg-navy-700"
                 disabled={Object.values(filters).every(value => value === '')}
               >
                 <X className="h-4 w-4 mr-2" />
@@ -106,17 +106,17 @@ export default function Gallery() {
               </button>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="flex items-center bg-white border border-gray-300 rounded-md px-3 py-2">
-                <Search className="h-4 w-4 text-gray-400 mr-2" />
+              <div className="flex items-center bg-white border border-gray-300 rounded-md px-3 py-2 dark:bg-navy-800 dark:border-navy-600">
+                <Search className="h-4 w-4 text-gray-400 mr-2 dark:text-stone-300" />
                 <input
                   type="text"
                   placeholder="Search artworks..."
                   value={filters.search}
                   onChange={(e) => handleFiltersChange({...filters, search: e.target.value})}
-                  className="outline-none text-gray-700 placeholder-gray-400"
+                  className="outline-none text-gray-700 placeholder-gray-400 dark:text-stone-100"
                 />
               </div>
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-gray-700 dark:text-stone-100">
                 Showing {filteredArtworks.length} of {mockArtworks.length} artwork{mockArtworks.length !== 1 ? 's' : ''}
               </div>
             </div>
@@ -124,14 +124,14 @@ export default function Gallery() {
 
           {/* Filters Panel */}
           {showFilters && (
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
+            <div className="bg-gray-50 rounded-lg p-6 mb-8 dark:bg-navy-800">
               <div className="grid md:grid-cols-4 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-stone-100">Category</label>
                   <select
                     value={filters.category}
                     onChange={(e) => handleFiltersChange({...filters, category: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-navy-600"
                   >
                     <option value="">All Categories</option>
                     <option value="painting">Painting</option>
@@ -144,7 +144,7 @@ export default function Gallery() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-stone-100">Price Range</label>
                   <div className="flex space-x-2">
                     <input
                       type="number"
@@ -154,9 +154,9 @@ export default function Gallery() {
                         ...filters, 
                         priceRange: [parseInt(e.target.value) || 0, filters.priceRange[1]]
                       })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-navy-600"
                     />
-                    <span className="self-center text-gray-500">-</span>
+                    <span className="self-center text-gray-500 dark:text-stone-300">-</span>
                     <input
                       type="number"
                       placeholder="Max"
@@ -165,17 +165,17 @@ export default function Gallery() {
                         ...filters, 
                         priceRange: [filters.priceRange[0], parseInt(e.target.value) || 10000]
                       })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-navy-600"
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">EUR</p>
+                  <p className="text-xs text-gray-500 mt-1 dark:text-stone-300">EUR</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-stone-100">Availability</label>
                   <select
                     value={filters.availability}
                     onChange={(e) => handleFiltersChange({...filters, availability: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-navy-600"
                   >
                     <option value="">All Items</option>
                     <option value="available">Available</option>

@@ -14,3 +14,9 @@ Artifacts: evidence/ contains screenshots, checks.json, axe reports, build/type/
 Original project: VMA /home/isak/website-optimization/repos/galerija-omerzel. This isolated worktree uses Git for any transfer back, and must not overwrite unrelated work. A newer upstream analytics-only commit e2943b3 appeared during review; it is preserved in the preview branch. Local source branch: preview/gallery-contact-20261019. Never push main without explicit approval.
 
 Email infrastructure is already configured; Toni still needs to verify galerija.omerzel@gmail.com. The site uses mailto drafts and cannot confirm delivery.
+
+## Follow-up: persistent dark mode
+
+Owner requested persistence across pages. Reused installed next-themes with the existing theme storage key, pre-paint initialization, cross-tab synchronization and system default. Explicit light/dark choices persist across every page and reload. Theme icons use CSS to avoid server/client hydration differences. About, Gallery, Videos and artwork dialogs now render dark surfaces/text, and document background/native controls use the active scheme.
+
+Production build, TypeScript and ESLint pass (same two existing warnings). review/evidence/theme-checks.json records five-page mobile/desktop navigation, reload and initialization before main markup, saved preference, second-tab synchronization, light preference persistence and system changes. No React page errors observed. The full contact/inquiry regression suite was rerun. Changes remain preview-only pending owner approval.
