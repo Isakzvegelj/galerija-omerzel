@@ -1,308 +1,53 @@
 'use client'
-
-import { Mail, Phone, MapPin, Clock } from 'lucide-react'
-import { useState } from 'react'
+import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
 import { galleryInfo, galleryGoogleMapsEmbedUrl, galleryGoogleMapsUrl } from '@/data/gallery'
+import { ContactForm } from '@/components/ui/ContactForm'
+import { useTranslation } from '@/lib/TranslationContext'
+import { contactCopy } from '@/lib/contact'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
-
-    const body = [
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      `Phone: ${formData.phone || 'Not provided'}`,
-      '',
-      formData.message,
-    ].join('\n')
-    const subject = formData.subject || 'Website inquiry'
-
-    window.location.href = `mailto:${galleryInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSubmitStatus('success')
-    setIsSubmitting(false)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
+  const { language } = useTranslation()
+  const c = contactCopy[language]
+  const links = [
+    { icon: Mail, title: c.email, detail: galleryInfo.email, href: `mailto:${galleryInfo.email}` },
+    { icon: Phone, title: c.call, detail: galleryInfo.phone, href: `tel:${galleryInfo.phone.replace(/\s/g, '')}` },
+    { icon: MapPin, title: c.directions, detail: galleryInfo.address, href: galleryGoogleMapsUrl },
+  ]
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Contact Us
-            </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We&apos;d love to hear from you. Visit our gallery or get in touch with any questions.
-            </p>
-          </div>
+    <div className="min-h-screen bg-[#faf9f6] text-navy-900 dark:bg-navy-900 dark:text-stone-100">
+      <section className="border-b border-stone-200 px-5 pb-12 pt-14 sm:px-8 sm:pb-16 sm:pt-20 dark:border-navy-700">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-5 text-xs font-semibold tracking-[0.18em] text-amber-900 dark:text-gold-300">{c.eyebrow}</p>
+          <h1 className="max-w-3xl text-4xl font-medium leading-tight tracking-tight sm:text-6xl">{c.title}</h1>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">{c.intro}</p>
         </div>
       </section>
-
-      {/* Contact Info */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <div className="text-center p-6 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-              <p className="text-gray-600">{galleryInfo.email}</p>
-            </div>
-            <div className="text-center p-6 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
-              <p className="text-gray-600">{galleryInfo.phone}</p>
-            </div>
-            <div className="text-center p-6 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-6 w-6 text-purple-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Address</h3>
-              <p className="text-gray-600">{galleryInfo.address}</p>
-            </div>
-            <div className="text-center p-6 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-6 w-6 text-orange-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Opening Hours</h3>
-              <p className="text-gray-600">Tue-Fri: 10AM-6PM<br />Sat: 10AM-4PM</p>
-            </div>
+      <section className="mx-auto grid max-w-6xl gap-10 px-5 py-10 sm:px-8 sm:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <div>
+          <div className="divide-y divide-stone-200 dark:divide-navy-600">
+            {links.map(({ icon: Icon, title, detail, href }) => <a key={href} href={href} {...(href.startsWith('https') ? {target: '_blank', rel: 'noopener noreferrer'} : {})} className="group flex items-start gap-4 py-6 first:pt-0">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-stone-300 bg-white transition group-hover:border-amber-800 dark:border-navy-600 dark:bg-navy-800"><Icon className="h-5 w-5 text-amber-900 dark:text-gold-300" aria-hidden="true" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm text-stone-500 dark:text-stone-300">{title}</span><span className="mt-1 block break-words text-base font-medium group-hover:underline sm:text-lg">{detail}</span></span>
+              <ArrowUpRight className="mt-3 h-4 w-4 shrink-0 text-stone-500 dark:text-stone-300" aria-hidden="true" />
+            </a>)}
           </div>
-
-          {/* Map */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-16">
-            <div className="p-4 bg-gray-50">
-              <h3 className="text-lg font-semibold text-gray-900">Find Us</h3>
-              <p className="text-gray-600">Gallery location</p>
-            </div>
-            <div className="relative w-full h-96 bg-gray-100">
-              <iframe
-                title={`Map to Galerija Omerzel at ${galleryInfo.address}`}
-                src={galleryGoogleMapsEmbedUrl}
-                width="100%"
-                height="400"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full"
-                onError={(e) => {
-                  // Hide the iframe and show fallback on error
-                  const target = e.target as HTMLIFrameElement;
-                  if (target) {
-                    target.style.display = 'none';
-                    const fallback = target.parentElement?.querySelector('.map-fallback');
-                    if (fallback) {
-                      (fallback as HTMLElement).style.display = 'flex';
-                    }
-                  }
-                }}
-              ></iframe>
-              {/* Fallback content */}
-              <div className="map-fallback absolute inset-0 hidden flex-col items-center justify-center bg-gray-100 text-gray-600">
-                <MapPin className="h-12 w-12 mb-4 text-gray-400" />
-                <h4 className="text-lg font-semibold mb-2">Location</h4>
-                <p className="text-center px-4">
-                  {galleryInfo.address}
-                </p>
-                <a
-                  href={galleryGoogleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Open in Google Maps
-                </a>
-              </div>
-            </div>
-            <div className="px-5 py-4 text-center">
-              <a
-                href={galleryGoogleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-900"
-              >
-                Open directions in Google Maps
-              </a>
-            </div>
+          <div className="mt-6 rounded-2xl border border-stone-200 bg-white p-5 dark:border-navy-600 dark:bg-navy-800">
+            <h2 className="font-medium">{c.visit}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">{c.visitNote}</p>
           </div>
         </div>
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 sm:p-8 dark:border-navy-600 dark:bg-navy-900">
+          <h2 className="text-2xl font-medium tracking-tight">{c.formTitle}</h2>
+          <p className="mb-7 mt-2 text-sm text-stone-600 dark:text-stone-300">{c.formIntro}</p>
+          <ContactForm />
+        </div>
       </section>
-
-      {/* Contact Form */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Send Us a Message
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Have questions about our artwork or exhibitions? We&apos;d love to hear from you.
-            </p>
-          </div>
-
-          {submitStatus === 'success' ? (
-            <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center mb-8">
-              <h3 className="text-xl font-semibold text-green-800 mb-2">Thank You!</h3>
-              <p className="text-green-700 mb-4">Your email app should now be open with your message ready to send. We&apos;ll get back to you within 24 hours.</p>
-              <button
-                onClick={() => setSubmitStatus('idle')}
-                className="px-6 py-2 border border-green-300 text-green-700 bg-white rounded-md hover:bg-green-50 transition-colors"
-              >
-                Send another message
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone (optional)
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject *
-                  </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="artwork">Artwork Information</option>
-                    <option value="purchase">Purchase Inquiry</option>
-                    <option value="exhibition">Exhibition Information</option>
-                    <option value="visit">Plan a Visit</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-              <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  placeholder="Tell us about your inquiry..."
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 transition-colors inline-flex items-center"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Sending...
-                    </>
-                  ) : (
-                    'Send Message'
-                  )}
-                </button>
-              </div>
-              {submitStatus === 'error' && (
-                <p className="text-red-600 text-center mt-4">Something went wrong. Please try again.</p>
-              )}
-              <p className="text-xs text-gray-500 text-center mt-4">
-                * Required fields. We&apos;ll respond to your inquiry within 24 hours.
-              </p>
-            </form>
-          )}
-
-          {/* Contact Info Cards */}
-          <div className="grid md:grid-cols-2 gap-8 mt-16">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Gallery Hours</h3>
-              <ul className="space-y-2 text-gray-600">
-                {galleryInfo.hours && Object.entries(galleryInfo.hours).map(([day, hours]) => (
-                  <li key={day}>
-                    <strong className="capitalize">{day}:</strong> {hours}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">What We Offer</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Private viewings</li>
-                <li>• Art consultation</li>
-                <li>• Custom framing services</li>
-                <li>• Art investment advice</li>
-                <li>• Exhibition hosting</li>
-                <li>• Artist representation</li>
-              </ul>
-            </div>
+      <section className="mx-auto max-w-6xl px-5 pb-14 sm:px-8 sm:pb-20" aria-label={c.visit}>
+        <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white dark:border-navy-600 dark:bg-navy-900">
+          <iframe title={c.mapTitle} src={galleryGoogleMapsEmbedUrl} className="h-64 w-full border-0 sm:h-80" loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
+          <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+            <p className="text-sm text-stone-600 dark:text-stone-300">{galleryInfo.address}</p>
+            <a href={galleryGoogleMapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium underline underline-offset-4">{c.mapLink}<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
           </div>
         </div>
       </section>

@@ -27,10 +27,12 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
       setImageError(false)
     } else {
       document.body.style.overflow = 'unset'
+      setIsInquiryModalOpen(false)
     }
 
     return () => {
       document.body.style.overflow = 'unset'
+      setIsInquiryModalOpen(false)
     }
   }, [isOpen])
 
@@ -53,10 +55,11 @@ export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
   }, [artwork])
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (isInquiryModalOpen) return
     if (e.key === 'Escape') onClose()
     if (e.key === 'ArrowLeft' && artwork && artwork.images.length > 1) prevImage()
     if (e.key === 'ArrowRight' && artwork && artwork.images.length > 1) nextImage()
-  }, [artwork, nextImage, prevImage, onClose])
+  }, [artwork, nextImage, prevImage, onClose, isInquiryModalOpen])
 
   useEffect(() => {
     if (isOpen && artwork) {

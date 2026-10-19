@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { galleryInfo } from '@/data/gallery'
+import { emailDraftUrl } from '@/lib/contact'
 import { X, Send, CheckCircle } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
 import { assetPath } from '@/lib/utils'
@@ -81,7 +84,7 @@ export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiry
     ].join('\n')
     const subject = `Artwork inquiry: ${artwork?.id || 'Artwork'}`
 
-    window.location.href = `mailto:galerija.omerzel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.location.href = emailDraftUrl(subject, body)
     setIsSubmitted(true)
     setIsSubmitting(false)
   }
@@ -121,8 +124,8 @@ ${formData.name || '[Your Name]'}`
 
   if (isSubmitted) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div className="relative max-w-md w-full bg-white rounded-lg shadow-2xl p-8">
+      <Dialog open={isOpen} onClose={handleClose} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <DialogPanel className="relative max-w-md w-full bg-white rounded-lg shadow-2xl p-8">
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
@@ -133,9 +136,9 @@ ${formData.name || '[Your Name]'}`
 
           <div className="text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</h3>
+            <DialogTitle className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</DialogTitle>
             <p className="text-gray-600 mb-6">
-              Your email app should open with the artwork reference and your message. Send the email there to complete your enquiry. If it does not open, email galerija.omerzel@gmail.com and include reference {artwork.id}.
+              Your email app should open with the artwork reference and your message. Send the email there to complete your enquiry. If it does not open, email <a href={`mailto:${galleryInfo.email}`} className="break-all underline">{galleryInfo.email}</a> and include reference {artwork.id}.
             </p>
             <button
               onClick={handleClose}
@@ -144,13 +147,13 @@ ${formData.name || '[Your Name]'}`
               Close
             </button>
           </div>
-        </div>
-      </div>
+        </DialogPanel>
+      </Dialog>
     )
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <Dialog open={isOpen} onClose={handleClose} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       {/* Backdrop */}
       <div
         className="absolute inset-0 cursor-pointer"
@@ -158,12 +161,12 @@ ${formData.name || '[Your Name]'}`
       />
 
       {/* Modal Content */}
-      <div className="relative max-w-2xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
+      <DialogPanel className="relative max-w-2xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="bg-gray-50 px-6 py-4 border-b">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Inquire About Artwork</h2>
+              <DialogTitle className="text-xl font-semibold text-gray-900">Inquire About Artwork</DialogTitle>
               <p className="text-sm text-gray-600 mt-1">
                 &ldquo;{artwork.title}&rdquo; by {artwork.artist}
               </p>
@@ -190,6 +193,8 @@ ${formData.name || '[Your Name]'}`
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
+                  required
                   value={formData.name}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -210,6 +215,8 @@ ${formData.name || '[Your Name]'}`
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
+                  required
                   value={formData.email}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -231,6 +238,7 @@ ${formData.name || '[Your Name]'}`
                 type="tel"
                 id="phone"
                 name="phone"
+                autoComplete="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -281,7 +289,7 @@ ${formData.name || '[Your Name]'}`
             </p>
           </form>
         </div>
-      </div>
-    </div>
+      </DialogPanel>
+    </Dialog>
   )
 }

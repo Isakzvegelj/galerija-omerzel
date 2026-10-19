@@ -1,225 +1,70 @@
 'use client'
-
 import { useState } from 'react'
-import { Send, CheckCircle } from 'lucide-react'
-
-interface ContactFormData {
-  name: string
-  email: string
-  phone?: string
-  subject: string
-  message: string
-}
+import { ArrowUpRight, Copy, Check } from 'lucide-react'
+import { galleryInfo } from '@/data/gallery'
+import { useTranslation } from '@/lib/TranslationContext'
+import { contactCopy, emailDraftUrl } from '@/lib/contact'
 
 export function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [errors, setErrors] = useState<Partial<ContactFormData>>({})
-
-  const validateForm = (): boolean => {
-    const newErrors: Partial<ContactFormData> = {}
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+  const { language } = useTranslation()
+  const c = contactCopy[language]
+  const [data, setData] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
+  const [draftReady, setDraftReady] = useState(false)
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle')
+  const subject = data.subject === '' ? c.subjectDefault : c.subjects[Number(data.subject)]
+  const body = [`${c.name}: ${data.name.trim()}`, `${c.emailLabel}: ${data.email.trim()}`, ...(data.phone.trim() ? [`${c.phone}: ${data.phone.trim()}`] : []), '', data.message.trim()].join('\n')
+  const update = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setData(previous => ({ ...previous, [event.target.name]: event.target.value }))
+    setCopyState('idle')
+    setDraftReady(false)
   }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-
-    // Clear error when user starts typing
-    if (errors[name as keyof ContactFormData]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }))
-    }
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const name = form.elements.namedItem('name') as HTMLInputElement
+    const message = form.elements.namedItem('message') as HTMLTextAreaElement
+    name.setCustomValidity(data.name.trim() ? '' : c.nameError)
+    message.setCustomValidity(data.message.trim() ? '' : c.messageError)
+    if (!form.reportValidity()) return
+    setDraftReady(true)
+    window.location.href = emailDraftUrl(subject, body)
   }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
-
-    const body = [
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      `Phone: ${formData.phone || 'Not provided'}`,
-      '',
-      formData.message,
-    ].join('\n')
-    const subject = formData.subject
-      ? `${formData.subject} — website inquiry`
-      : 'Website inquiry'
-
-    window.location.href = `mailto:galerija.omerzel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setIsSubmitted(true)
-    setIsSubmitting(false)
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(`${galleryInfo.email}\n${subject}\n\n${body}`)
+      setCopyState('copied')
+    } catch { setCopyState('error') }
   }
-
-  if (isSubmitted) {
-    return (
-      <div className="text-center py-8">
-        <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Draft Ready</h3>
-        <p className="text-gray-600 mb-4">
-          Your email app should open with a draft. Send it there to complete your enquiry. If it does not open, email galerija.omerzel@gmail.com directly.
-        </p>
-        <button
-          onClick={() => setIsSubmitted(false)}
-          className="text-blue-600 hover:text-blue-800 font-medium"
-        >
-          Send another message
-        </button>
-      </div>
-    )
-  }
-
+  const input = 'w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-navy-900 outline-none transition focus:border-amber-800 focus:ring-2 focus:ring-amber-800/20 dark:border-navy-500 dark:bg-navy-800 dark:text-white'
+  const label = 'mb-2 block text-sm font-medium text-navy-800 dark:text-stone-100'
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Name *
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.name ? 'border-red-300' : 'border-gray-300'
-            }`}
-            placeholder="Your full name"
-          />
-          {errors.name && (
-            <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email *
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.email ? 'border-red-300' : 'border-gray-300'
-            }`}
-            placeholder="your.email@example.com"
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-          )}
-        </div>
+    <form onSubmit={submit} className="space-y-5">
+      <p className="text-xs text-stone-500 dark:text-stone-300">* {c.required}</p>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div><label htmlFor="contact-name" className={label}>{c.name} *</label>
+          <input id="contact-name" name="name" autoComplete="name" required maxLength={120} value={data.name} onChange={update} onInput={event => event.currentTarget.setCustomValidity('')} className={input} /></div>
+        <div><label htmlFor="contact-email" className={label}>{c.emailLabel} *</label>
+          <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} value={data.email} onChange={update} className={input} /></div>
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-            Phone (optional)
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="+386 XX XXX XXX"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-            Subject
-          </label>
-          <select
-            id="subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Select a subject</option>
-            <option value="general">General Inquiry</option>
-            <option value="artwork">Artwork Information</option>
-            <option value="purchase">Purchase Inquiry</option>
-            <option value="exhibition">Exhibition Information</option>
-            <option value="visit">Plan a Visit</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-          Message *
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          value={formData.message}
-          onChange={handleInputChange}
-          className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-            errors.message ? 'border-red-300' : 'border-gray-300'
-          }`}
-          placeholder="Tell us how we can help you..."
-        />
-        {errors.message && (
-          <p className="mt-1 text-sm text-red-600">{errors.message}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-      >
-        {isSubmitting ? (
-          <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-            Preparing email...
-          </>
-        ) : (
-          <>
-            <Send className="h-5 w-5 mr-2" />
-            Prepare Email Enquiry
-          </>
-        )}
+      <div><label htmlFor="contact-subject" className={label}>{c.subject}</label>
+        <select id="contact-subject" name="subject" value={data.subject} onChange={update} className={input}>
+          <option value="">{c.subjectDefault}</option>
+          {c.subjects.map((item, index) => <option key={index} value={index}>{item}</option>)}
+        </select></div>
+      <div><label htmlFor="contact-phone" className={label}>{c.phone}</label>
+        <input id="contact-phone" name="phone" type="tel" autoComplete="tel" maxLength={60} value={data.phone} onChange={update} className={input} /></div>
+      <div><label htmlFor="contact-message" className={label}>{c.message} *</label>
+        <textarea id="contact-message" name="message" rows={5} required maxLength={3000} value={data.message} onChange={update} onInput={event => event.currentTarget.setCustomValidity('')} placeholder={c.placeholder} className={input} /></div>
+      <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-navy-900 px-5 py-3 font-medium text-white transition hover:bg-navy-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800 dark:bg-gold-400 dark:text-navy-900 dark:hover:bg-gold-300">
+        {c.prepare}<ArrowUpRight aria-hidden="true" className="h-4 w-4" />
       </button>
-
-      <p className="text-xs text-gray-500 text-center">
-        * Required fields. This opens a draft in your email app; you still need to send it.
-      </p>
+      <p className="text-sm text-stone-600 dark:text-stone-300">{c.hint}</p>
+      {draftReady && <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-navy-900 dark:border-gold-700 dark:bg-navy-800 dark:text-stone-100"><p className="mb-1 font-semibold">{c.ready}</p><p>{c.readyNote}</p></div>}
+      <div className="border-t border-stone-200 pt-5 dark:border-navy-600">
+        <p className="mb-3 text-sm text-stone-600 dark:text-stone-300">{c.fallback} <a className="break-all font-medium underline underline-offset-4" href={`mailto:${galleryInfo.email}`}>{galleryInfo.email}</a>.</p>
+        <button type="button" onClick={copy} className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-navy-900 underline underline-offset-4 dark:text-gold-300">{copyState === 'copied' ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}{copyState === 'copied' ? c.copied : c.copy}</button>
+        <span role="status" className="block text-sm text-stone-600 dark:text-stone-300">{copyState === 'error' ? c.copyFailed : copyState === 'copied' ? c.copied : ''}</span>
+      </div>
     </form>
   )
 }

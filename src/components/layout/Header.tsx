@@ -8,7 +8,7 @@ import { useTranslation } from '@/lib/TranslationContext'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { setLanguage, t } = useTranslation()
+  const { language, setLanguage, t } = useTranslation()
 
   const navigation = [
     { name: t('home'), href: '/' },
@@ -20,7 +20,6 @@ export function Header() {
 
   const switchLanguage = (newLocale: 'en' | 'sl') => {
     setLanguage(newLocale)
-    console.log(`Language switched to: ${newLocale}`)
   }
 
   return (
@@ -54,12 +53,14 @@ export function Header() {
                 <div className="flex space-x-1">
                   <button
                     onClick={() => switchLanguage('en')}
+                    aria-pressed={language === 'en'}
                     className="px-2 py-1 text-xs font-medium rounded text-navy-200 hover:text-gold-400"
                   >
                     EN
                   </button>
                   <button
                     onClick={() => switchLanguage('sl')}
+                    aria-pressed={language === 'sl'}
                     className="px-2 py-1 text-xs font-medium rounded text-navy-200 hover:text-gold-400"
                   >
                     SL

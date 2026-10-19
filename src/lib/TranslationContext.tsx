@@ -28,6 +28,10 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
     }
   }, [])
 
+  useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
     if (typeof window !== 'undefined') {

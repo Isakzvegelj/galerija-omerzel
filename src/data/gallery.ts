@@ -5,7 +5,7 @@ export const galleryInfo: GalleryInfo = {
   fullName: 'Galerija Omerzel / Galerija Bled d.o.o.',
   address: 'Cesta svobode 19, 4260 Bled, Slovenia',
   phone: '+386 40 855 755',
-  email: 'galerija.omerzel@gmail.com',
+  email: 'info@gallerybled.com',
   description: 'Art gallery located in Bled, Slovenia, showcasing contemporary and traditional artworks from local and international artists.',
   owner: {
     name: 'Anton Omerzel',
