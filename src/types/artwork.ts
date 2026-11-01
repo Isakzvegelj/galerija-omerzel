@@ -15,20 +15,19 @@ export interface Artwork {
     height: number;
     unit: string;
   };
-  images: Array<{
-    id: string;
-    url: string;
-    alt: string;
-    isPrimary: boolean;
-    width: number;
-    height: number;
-  }>;
+  images: ArtworkImage[];
+  reference?: string;
+  titleSl?: string;
+  target?: string;
+  targetSl?: string;
+  partialPhoto?: boolean;
   isAvailable: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface ArtworkImage {
+  focus?: { x: number; y: number; width: number; height: number };
   id: string;
   url: string;
   alt: string;

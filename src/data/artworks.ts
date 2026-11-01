@@ -1,3 +1,5 @@
+import { productSpecs, artworkAliases } from './artwork-products';
+import photoSizes from './artwork-photo-sizes.json';
 import { Artwork } from '@/types/artwork';
 
 export const mockArtworks: Artwork[] = [
@@ -810,4 +812,37 @@ for (const artwork of mockArtworks) {
   artwork.title = labels.title;
   const primaryImage = artwork.images.find(image => image.isPrimary) ?? artwork.images[0];
   if (primaryImage) primaryImage.alt = labels.alt;
+}
+
+
+// Present one visually identified work per entry. Descriptions are visual labels,
+// not verified artist titles, materials, inventory numbers or availability.
+const sourcePhotographs = [...mockArtworks];
+const sourceById = new Map(sourcePhotographs.map(artwork => [artwork.id, artwork]));
+const knownSizes: Record<string, {width: number; height: number}> = photoSizes;
+const products: Artwork[] = productSpecs.map(spec => {
+  const source = sourceById.get(spec.photos[0].source);
+  if (!source) throw new Error(`Missing source for ${spec.reference}`);
+  return {
+    ...source,
+    id: spec.id, reference: spec.reference, title: spec.title, titleSl: spec.titleSl,
+    category: spec.category, description: spec.target,
+    target: spec.target, targetSl: spec.targetSl, partialPhoto: !!spec.partial,
+    images: spec.photos.map((photo, index) => {
+      const original = sourceById.get(photo.source)?.images[0];
+      if (!original) throw new Error(`Missing photograph for ${spec.reference}`);
+      const size = knownSizes[original.url];
+      if (!size) throw new Error(`Missing dimensions for ${original.url}`);
+      const [x,y,width,height] = photo.focus;
+      return {...original, ...size, id: `${spec.reference}-photo-${index+1}`,
+        alt: `${spec.title} — ${spec.reference}. ${spec.target}`,
+        focus: {x,y,width,height}, isPrimary: index === 0};
+    }),
+  };
+});
+mockArtworks.splice(0, mockArtworks.length, ...products);
+
+export function findArtwork(reference: string) {
+  const id = artworkAliases[reference] || reference;
+  return mockArtworks.find(artwork => artwork.id === id || artwork.reference?.toLowerCase() === id.toLowerCase());
 }

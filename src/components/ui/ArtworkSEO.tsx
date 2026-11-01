@@ -1,89 +1,17 @@
 import { Metadata } from 'next'
 import { Artwork } from '@/types/artwork'
 
-interface ArtworkSEOProps {
-  artwork: Artwork
+// Visual descriptions and photo references are known. Artist, date, dimensions,
+// materials, provenance and offers require a verified gallery catalogue.
+export function generateArtworkMetadata(artwork:Artwork):Metadata{
+  const image=artwork.images.find(image=>image.isPrimary)||artwork.images[0]
+  const title=`${artwork.title} · ${artwork.reference||artwork.id}`
+  return {title:`${title} | Galerija Omerzel`,description:artwork.target||artwork.description,
+    openGraph:{title,description:artwork.target||artwork.description,type:'article',images:image?[{url:image.url,width:image.width,height:image.height,alt:image.alt}]:[]},
+    twitter:{card:'summary_large_image',title,description:artwork.target||artwork.description,images:image?[image.url]:[]}}
 }
-
-export function generateArtworkMetadata(artwork: Artwork): Metadata {
-  const primaryImage = artwork.images.find(img => img.isPrimary) || artwork.images[0]
-
-  return {
-    title: `${artwork.title} by ${artwork.artist} - Galerija Omerzel`,
-    description: artwork.description.length > 160
-      ? artwork.description.substring(0, 157) + '...'
-      : artwork.description,
-    keywords: [
-      artwork.title,
-      artwork.artist,
-      'artwork',
-      'painting',
-      'sculpture',
-      'Bled',
-      'Slovenia',
-      'Galerija Omerzel',
-      artwork.category.replace('-', ' ')
-    ].join(', '),
-    openGraph: {
-      title: `${artwork.title} by ${artwork.artist}`,
-      description: artwork.description,
-      type: 'article',
-      images: primaryImage ? [{
-        url: primaryImage.url,
-        width: primaryImage.width,
-        height: primaryImage.height,
-        alt: primaryImage.alt,
-      }] : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${artwork.title} by ${artwork.artist}`,
-      description: artwork.description,
-      images: primaryImage ? [primaryImage.url] : [],
-    },
-  }
+export function ArtworkStructuredData({artwork}:{artwork:Artwork}){
+  const image=artwork.images.find(image=>image.isPrimary)||artwork.images[0]
+  const data={'@context':'https://schema.org','@type':'VisualArtwork',name:artwork.title,identifier:artwork.reference||artwork.id,description:artwork.target||artwork.description,artform:artwork.category,url:`https://gallerybled.com/gallery/?artwork=${encodeURIComponent(artwork.reference||artwork.id)}`,image:image?{'@type':'ImageObject',url:image.url,width:image.width,height:image.height}:undefined}
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(data).replace(/</g,'\\u003c')}}/>
 }
-
-export function ArtworkStructuredData({ artwork }: ArtworkSEOProps) {
-  const primaryImage = artwork.images.find(img => img.isPrimary) || artwork.images[0]
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'VisualArtwork',
-    name: artwork.title,
-    creator: {
-      '@type': 'Person',
-      name: artwork.artist,
-    },
-    description: artwork.description,
-    dateCreated: artwork.year?.toString(),
-    artMedium: artwork.medium,
-    artform: artwork.category,
-    width: `${artwork.dimensions.width} ${artwork.dimensions.unit}`,
-    height: `${artwork.dimensions.height} ${artwork.dimensions.unit}`,
-    offers: artwork.price ? {
-      '@type': 'Offer',
-      price: artwork.price.toString(),
-      priceCurrency: artwork.currency,
-      availability: artwork.isAvailable
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/SoldOut',
-    } : undefined,
-    image: primaryImage ? {
-      '@type': 'ImageObject',
-      url: primaryImage.url,
-      width: primaryImage.width,
-      height: primaryImage.height,
-    } : undefined,
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(structuredData),
-      }}
-    />
-  )
-}
-
-

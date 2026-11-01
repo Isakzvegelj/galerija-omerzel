@@ -1,241 +1,29 @@
 'use client'
-
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
+import { useEffect,useState } from 'react'
+import { ChevronLeft,ChevronRight,Play,Pause } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
-import { useTranslation } from '@/lib/TranslationContext'
-import { salesCopy } from '@/lib/sales-copy'
 import { Artwork } from '@/types/artwork'
-import { assetPath } from '@/lib/utils'
-import { ArtworkImage as Image } from './ArtworkImage'
+import { useTranslation } from '@/lib/TranslationContext'
+import { productCopy,productTitle } from '@/lib/product-copy'
+import { salesCopy } from '@/lib/sales-copy'
+import { ArtworkProductImage } from './ArtworkProductImage'
 
-interface ArtworkCarouselProps {
-  onArtworkClick?: (artwork: Artwork) => void
-}
-
-export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
-  const { language } = useTranslation()
-  const c = salesCopy[language]
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isFocused, setIsFocused] = useState(false)
-  const [reduceMotion, setReduceMotion] = useState(false)
-  useEffect(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const updatePreference = () => setReduceMotion(preference.matches)
-    updatePreference()
-    preference.addEventListener('change', updatePreference)
-    return () => preference.removeEventListener('change', updatePreference)
-  }, [])
-  const carouselRef = useRef<HTMLDivElement>(null)
-
-  // Start only on request; keep artwork still while reading, focusing or hovering.
-  useEffect(() => {
-    if (!isAutoPlaying || isHovered || isFocused || reduceMotion) return
-    const interval = setInterval(() => {
-      if (!document.hidden) setCurrentIndex(prev => (prev + 1) % mockArtworks.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, isHovered, isFocused, reduceMotion])
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % mockArtworks.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + mockArtworks.length) % mockArtworks.length)
-  }
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index)
-  }
-
-  const currentArtwork = mockArtworks[currentIndex]
-  const primaryImage = currentArtwork?.images.find(img => img.isPrimary) || currentArtwork?.images[0]
-
-  return (
-    <div className="relative w-full max-w-6xl mx-auto">
-      {/* Main Carousel */}
-      <motion.div
-        ref={carouselRef}
-        className="relative overflow-hidden rounded-2xl bg-[#24211d] shadow-[0_24px_70px_-30px_rgba(35,28,18,0.55)]"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onFocusCapture={() => setIsFocused(true)}
-        onBlurCapture={event => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false)
-        }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.3 }}
-      >
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-4 left-4 w-20 h-20 bg-gold-400 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-4 right-4 w-16 h-16 bg-emerald-400 rounded-full blur-xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-burgundy-400 rounded-full blur-2xl animate-pulse delay-500"></div>
-        </div>
-
-        <div className="relative flex min-h-[480px] items-center justify-center px-5 py-14 sm:min-h-[500px] sm:p-8 md:h-[500px] md:min-h-0">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={currentIndex}
-              initial={reduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.2,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-              className="flex flex-col md:flex-row items-center space-y-4 sm:space-y-6 md:space-y-0 md:space-x-8 w-full max-w-4xl"
-            >
-              {/* Artwork Image */}
-              <motion.div
-                className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-xl overflow-hidden shadow-2xl cursor-pointer"
-                whileHover={{ scale: 1.05, rotateY: 5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => onArtworkClick?.(currentArtwork)}
-              >
-                {primaryImage && (
-                  <Image
-                    src={assetPath(primaryImage.url)}
-                    alt={primaryImage.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 639px) 224px, (max-width: 767px) 256px, 320px"
-                    priority={currentIndex === 0}
-                  />
-                )}
-
-              </motion.div>
-
-              {/* Artwork Info */}
-              <motion.div
-                initial={false}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-center md:text-left max-w-md"
-              >
-                <motion.h2
-                  className="text-2xl md:text-3xl font-bold text-gold-400 mb-2"
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  {currentArtwork.title}
-                </motion.h2>
-
-                {currentArtwork.artist !== 'Contemporary Slovenian Artist' && (
-                  <motion.p
-                    className="text-lg text-navy-200 mb-4"
-                    initial={false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    by {currentArtwork.artist}
-                  </motion.p>
-                )}
-
-                <motion.p
-                  className="text-sm text-navy-300"
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  {currentArtwork.category === 'sculpture' ? 'Sculpture' : 'Painting'}
-                </motion.p>
-
-                <motion.button
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => onArtworkClick?.(currentArtwork)}
-                  className="mt-6 px-6 py-3 bg-gold-600 hover:bg-gold-700 text-navy-900 font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  {c.detailsLink}
-                </motion.button>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation Arrows */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={prevSlide}
-          aria-label="Previous artwork"
-          className="absolute left-3 top-4 md:left-4 md:top-1/2 md:-translate-y-1/2 p-2 md:p-3 bg-navy-800/90 hover:bg-navy-700 text-gold-400 rounded-full shadow-lg backdrop-blur-sm border border-gold-500/20 z-10"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={nextSlide}
-          aria-label="Next artwork"
-          className="absolute right-14 top-4 md:right-4 md:top-1/2 md:-translate-y-1/2 p-2 md:p-3 bg-navy-800/90 hover:bg-navy-700 text-gold-400 rounded-full shadow-lg backdrop-blur-sm border border-gold-500/20 z-10"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </motion.button>
-
-        {/* Optional slideshow playback */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsAutoPlaying(playing => !playing)}
-          disabled={!!reduceMotion}
-          aria-label={reduceMotion ? 'Slideshow paused for reduced motion' : isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
-          aria-pressed={isAutoPlaying && !reduceMotion}
-          className="absolute top-4 right-4 p-2 bg-navy-800/80 hover:bg-navy-700 text-gold-400 rounded-full shadow-lg backdrop-blur-sm border border-gold-500/20 z-10"
-        >
-          {!isAutoPlaying || reduceMotion ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
-        </motion.button>
-      </motion.div>
-
-      {/* Thumbnail Navigation */}
-      <div className="flex justify-start sm:justify-center gap-2 mt-5 overflow-x-auto overscroll-x-contain px-3 pb-2 snap-x snap-mandatory">
-        {mockArtworks.map((artwork, index) => {
-          const thumbImage = artwork.images.find(img => img.isPrimary) || artwork.images[0]
-          return (
-            <motion.button
-              key={artwork.id}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => goToSlide(index)}
-              aria-label={`Show artwork: ${artwork.title}`}
-              aria-pressed={index === currentIndex}
-              className={`relative w-12 h-12 sm:w-16 sm:h-16 shrink-0 snap-center rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                index === currentIndex
-                  ? 'border-gold-500 shadow-lg shadow-gold-500/25'
-                  : 'border-navy-600 hover:border-gold-400'
-              }`}
-            >
-              {thumbImage && (
-                <Image
-                  src={assetPath(thumbImage.url)}
-                  alt={artwork.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 639px) 48px, 64px"
-                />
-              )}
-              {index === currentIndex && (
-                <motion.div
-                  layoutId="activeIndicator"
-                  className="absolute inset-0 bg-gold-500/20 rounded-lg"
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-            </motion.button>
-          )
-        })}
+export function ArtworkCarousel({onArtworkClick}:{onArtworkClick?:(artwork:Artwork)=>void}){
+  const {language}=useTranslation(),p=productCopy[language]
+  const [index,setIndex]=useState(0),[playing,setPlaying]=useState(false),[paused,setPaused]=useState(false),[focused,setFocused]=useState(false),[reduced,setReduced]=useState(false)
+  useEffect(()=>{const media=window.matchMedia('(prefers-reduced-motion: reduce)');const update=()=>setReduced(media.matches);update();media.addEventListener('change',update);return()=>media.removeEventListener('change',update)},[])
+  useEffect(()=>{if(!playing||paused||focused||reduced)return;const timer=setInterval(()=>{if(!document.hidden)setIndex(i=>(i+1)%mockArtworks.length)},5000);return()=>clearInterval(timer)},[playing,paused,focused,reduced])
+  const artwork=mockArtworks[index],image=artwork.images[0]
+  return <div className="mx-auto max-w-6xl" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setFocused(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget))setFocused(false)}}>
+    <div className="overflow-hidden rounded-2xl bg-[#24211d] p-5 text-white shadow-xl sm:p-8">
+      <div className="grid items-center gap-6 md:grid-cols-2">
+        <button type="button" aria-label={`${salesCopy[language].detailsLink}: ${artwork.reference}`} onClick={()=>onArtworkClick?.(artwork)} className="aspect-[4/3] w-full rounded-xl bg-[#eeeae3] p-3"><ArtworkProductImage key={image.id} image={image} reference={artwork.reference} priority/></button>
+        <div className="text-center md:text-left"><p className="text-xs font-semibold tracking-wider text-gold-300">{artwork.reference} · {artwork.category==='painting'?p.painting:p.sculpture}</p><h2 className="mt-3 font-serif text-2xl sm:text-3xl">{productTitle(artwork,language)}</h2><button type="button" onClick={()=>onArtworkClick?.(artwork)} className="mt-6 min-h-12 rounded-full bg-gold-500 px-5 py-3 text-sm font-semibold text-navy-900 hover:bg-gold-400">{salesCopy[language].detailsLink}</button></div>
       </div>
-
+      <div className="mt-5 flex items-center justify-center gap-4"><button type="button" aria-label={language==='sl'?'Prejšnje delo':'Previous artwork'} onClick={()=>setIndex((index+mockArtworks.length-1)%mockArtworks.length)} className="rounded-full border border-stone-400 p-3"><ChevronLeft className="h-5 w-5"/></button><span className="text-xs text-stone-200">{index+1} / {mockArtworks.length}</span><button type="button" aria-label={language==='sl'?'Naslednje delo':'Next artwork'} onClick={()=>setIndex((index+1)%mockArtworks.length)} className="rounded-full border border-stone-400 p-3"><ChevronRight className="h-5 w-5"/></button><button type="button" aria-label={playing?'Pause slideshow':'Play slideshow'} aria-pressed={playing} onClick={()=>setPlaying(!playing)} disabled={reduced} className="rounded-full border border-stone-400 p-3 disabled:opacity-40">{playing?<Pause className="h-4 w-4"/>:<Play className="h-4 w-4"/>}</button></div>
     </div>
-  )
+    <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
+      {mockArtworks.map((artwork,i)=><button key={artwork.id} type="button" aria-label={`${artwork.reference}: ${productTitle(artwork,language)}`} aria-pressed={i===index} onClick={()=>setIndex(i)} className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 bg-[#eeeae3] p-1 ${i===index?'border-amber-800 dark:border-gold-400':'border-transparent'}`}><ArtworkProductImage image={artwork.images[0]} reference={artwork.reference} thumbnail/></button>)}
+    </div>
+  </div>
 }
