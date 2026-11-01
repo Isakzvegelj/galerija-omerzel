@@ -28,7 +28,12 @@ export const metadata: Metadata = {
     locale: 'en_US',
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/gallery-mark.svg', type: 'image/svg+xml' },
+      { url: '/gallery-mark-96.png', type: 'image/png', sizes: '96x96' },
+      { url: '/gallery-mark-32.png', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: [{ url: '/gallery-mark-180.png', sizes: '180x180', type: 'image/png' }],
   },
 }
 
