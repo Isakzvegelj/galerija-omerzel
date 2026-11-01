@@ -1,0 +1,30 @@
+{
+  "/": {
+    "path": "index.html",
+    "type": "text/html"
+  },
+  "/gallery-mark.svg": {
+    "path": "gallery-mark.svg",
+    "type": "image/svg+xml"
+  },
+  "/gallery-mark-16.png": {
+    "path": "gallery-mark-16.png",
+    "type": "image/png"
+  },
+  "/gallery-mark-48.png": {
+    "path": "gallery-mark-48.png",
+    "type": "image/png"
+  },
+  "/gallery-mark-96.png": {
+    "path": "gallery-mark-96.png",
+    "type": "image/png"
+  },
+  "/gallery-mark-180.png": {
+    "path": "gallery-mark-180.png",
+    "type": "image/png"
+  },
+  "/gallery-mark-32.png": {
+    "path": "gallery-mark-32.png",
+    "type": "image/png"
+  }
+}
