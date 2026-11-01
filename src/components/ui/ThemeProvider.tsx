@@ -6,7 +6,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemeProvider
       attribute="class"
-      storageKey="theme"
+      storageKey={process.env.NEXT_PUBLIC_BASE_PATH ? 'gallery-sales-preview-theme' : 'theme'}
       defaultTheme="system"
       enableSystem
       enableColorScheme

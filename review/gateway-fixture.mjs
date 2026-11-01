@@ -1,0 +1,14 @@
+import { createPreview } from '/home/isak/vm/dashboard/phone-unlock-preview/server.mjs';
+import { createGateway } from '/home/isak/vm/dashboard/recep-live-gateway/gateway.mjs';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const dir=mkdtempSync(join(tmpdir(),'gallery-sales-auth-'));
+const origin='http://localhost:19295',owner='isakzv@gmail.com';
+const {server:verifier}=createPreview({origin,owner,stateFile:join(dir,'keys.json'),bootstrapToken:'gallery-sales-test-only'});
+const gateway=createGateway({origin,owner,authOrigin:origin,authPort:19294,dashboardOrigin:'https://vma.tail8cd004.ts.net:8454',pollMs:500});
+await new Promise(r=>verifier.listen(19294,'127.0.0.1',r));
+await new Promise(r=>gateway.server.listen(19295,'127.0.0.1',r));
+console.log('Fixture ready; temporary credentials only');
+const stop=()=>{verifier.closeAllConnections();gateway.server.closeAllConnections();verifier.close();gateway.server.close();rmSync(dir,{recursive:true,force:true});process.exit(0)};
+process.on('SIGTERM',stop);process.on('SIGINT',stop);setTimeout(stop,600000);

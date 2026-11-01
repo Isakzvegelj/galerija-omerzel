@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Search, Filter, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { mockArtworks } from '@/data/artworks'
@@ -10,6 +10,10 @@ import { Artwork } from '@/types/artwork'
 
 export default function Gallery() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
+  useEffect(() => {
+    const reference = new URLSearchParams(window.location.search).get('artwork')
+    if (reference) setSelectedArtwork(mockArtworks.find(a => a.id === reference) || null)
+  }, [])
   const [filters, setFilters] = useState({
     search: '',
     category: '',
@@ -54,6 +58,8 @@ export default function Gallery() {
     setFilters(newFilters)
   }
 
+  const hasActiveFilters = !!(filters.search || filters.category || filters.availability || filters.priceRange[0] !== 0 || filters.priceRange[1] !== 10000)
+
   const clearFilters = () => {
     setFilters({
       search: '',
@@ -90,7 +96,7 @@ export default function Gallery() {
               >
                 <Filter className="h-4 w-4 mr-2" />
                 Filters
-                {Object.values(filters).some(value => value !== '') && (
+                {hasActiveFilters && (
                   <span className="ml-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
                     Active
                   </span>
@@ -99,21 +105,22 @@ export default function Gallery() {
               <button
                 onClick={clearFilters}
                 className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors dark:border-navy-600 dark:text-stone-100 dark:hover:bg-navy-700"
-                disabled={Object.values(filters).every(value => value === '')}
+                disabled={!hasActiveFilters}
               >
                 <X className="h-4 w-4 mr-2" />
                 Clear All
               </button>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center bg-white border border-gray-300 rounded-md px-3 py-2 dark:bg-navy-800 dark:border-navy-600">
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <div className="flex min-w-0 items-center bg-white border border-gray-300 rounded-md px-3 py-2 dark:bg-navy-800 dark:border-navy-600">
                 <Search className="h-4 w-4 text-gray-400 mr-2 dark:text-stone-300" />
                 <input
                   type="text"
+                  aria-label="Search artworks"
                   placeholder="Search artworks..."
                   value={filters.search}
                   onChange={(e) => handleFiltersChange({...filters, search: e.target.value})}
-                  className="outline-none text-gray-700 placeholder-gray-400 dark:text-stone-100"
+                  className="w-full min-w-0 outline-none text-gray-700 placeholder-gray-400 dark:text-stone-100"
                 />
               </div>
               <div className="text-sm text-gray-700 dark:text-stone-100">

@@ -2,294 +2,54 @@
 
 import { useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { X } from 'lucide-react'
 import { galleryInfo } from '@/data/gallery'
 import { emailDraftUrl } from '@/lib/contact'
-import { X, Send, CheckCircle } from 'lucide-react'
+import { salesCopy } from '@/lib/sales-copy'
+import { useTranslation } from '@/lib/TranslationContext'
 import { Artwork } from '@/types/artwork'
-import { assetPath } from '@/lib/utils'
 
-interface ArtworkInquiryModalProps {
-  artwork: Artwork | null
-  isOpen: boolean
-  onClose: () => void
-}
-
-interface InquiryFormData {
-  name: string
-  email: string
-  phone?: string
-  message: string
-}
-
-export function ArtworkInquiryModal({ artwork, isOpen, onClose }: ArtworkInquiryModalProps) {
-  const [formData, setFormData] = useState<InquiryFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [errors, setErrors] = useState<Partial<InquiryFormData>>({})
-
-  const validateForm = (): boolean => {
-    const newErrors: Partial<InquiryFormData> = {}
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'
-    }
-
-    if (!formData.message.trim() && !defaultMessage.trim()) {
-      newErrors.message = 'Message is required'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+export function ArtworkInquiryModal({ artwork, isOpen, onClose }: {
+  artwork: Artwork | null; isOpen: boolean; onClose: () => void
+}) {
+  const { language } = useTranslation()
+  const c = salesCopy[language]
+  const [name, setName] = useState('')
+  const [message, setMessage] = useState<string | null>(null)
+  const [copyStatus, setCopyStatus] = useState('')
+  if (!artwork) return null
+  const artworkUrl = `https://gallerybled.com/gallery/?artwork=${encodeURIComponent(artwork.id)}`
+  const body = [c.reference + ': ' + artwork.id, artworkUrl, '', message ?? c.defaultMessage, '', name].join('\n')
+  const subject = `Artwork enquiry: ${artwork.id}`
+  const copyText = `${galleryInfo.email}\n${subject}\n\n${body}`
+  async function copy() {
+    try { await navigator.clipboard.writeText(copyText); setCopyStatus(c.copied) }
+    catch { setCopyStatus(c.copyFailed) }
   }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-
-    // Clear error when user starts typing
-    if (errors[name as keyof InquiryFormData]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }))
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
-
-    const body = [
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      `Phone: ${formData.phone || 'Not provided'}`,
-      '',
-      `Artwork reference: ${artwork?.id}`,
-      `Photograph: https://gallerybled.com${assetPath(artwork?.images[0]?.url || '')}`,
-      '',
-      formData.message || defaultMessage,
-    ].join('\n')
-    const subject = `Artwork inquiry: ${artwork?.id || 'Artwork'}`
-
-    window.location.href = emailDraftUrl(subject, body)
-    setIsSubmitted(true)
-    setIsSubmitting(false)
-  }
-
-  const resetForm = () => {
-    setIsSubmitted(false)
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
-    })
-    setErrors({})
-  }
-
-  const handleClose = () => {
-    resetForm()
-    onClose()
-  }
-
-  if (!artwork || !isOpen) return null
-
-  const defaultMessage = `Hello,
-
-I'm interested in learning more about the photographed work "${artwork.title}" (reference: ${artwork.id}).
-
-Could you please provide more information about:
-- Availability
-- Pricing details
-- Shipping options
-- Any additional images or details
-
-Thank you for your time.
-
-Best regards,
-${formData.name || '[Your Name]'}`
-
-  if (isSubmitted) {
-    return (
-      <Dialog open={isOpen} onClose={handleClose} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <DialogPanel className="relative max-w-md w-full bg-white rounded-lg shadow-2xl p-8 dark:bg-navy-800">
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors dark:text-stone-300"
-            aria-label="Close modal"
-          >
-            <X className="h-5 w-5" />
-          </button>
-
-          <div className="text-center">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <DialogTitle className="text-xl font-semibold text-gray-900 mb-2 dark:text-stone-100">Email Draft Ready</DialogTitle>
-            <p className="text-gray-600 mb-6 dark:text-stone-300">
-              Your email app should open with the artwork reference and your message. Send the email there to complete your enquiry. If it does not open, email <a href={`mailto:${galleryInfo.email}`} className="break-all underline">{galleryInfo.email}</a> and include reference {artwork.id}.
-            </p>
-            <button
-              onClick={handleClose}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors font-medium"
-            >
-              Close
-            </button>
-          </div>
-        </DialogPanel>
-      </Dialog>
-    )
-  }
-
   return (
-    <Dialog open={isOpen} onClose={handleClose} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 cursor-pointer"
-        onClick={handleClose}
-      />
-
-      {/* Modal Content */}
-      <DialogPanel className="relative max-w-2xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden dark:bg-navy-800">
-        {/* Header */}
-        <div className="bg-gray-50 px-6 py-4 border-b dark:bg-navy-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-stone-100">Inquire About Artwork</DialogTitle>
-              <p className="text-sm text-gray-600 mt-1 dark:text-stone-300">
-                &ldquo;{artwork.title}&rdquo; by {artwork.artist}
-              </p>
+    <Dialog open={isOpen} onClose={onClose} className="fixed inset-0 z-[70]">
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
+      <div className="fixed inset-0 overflow-y-auto p-4">
+        <div className="flex min-h-full items-center justify-center">
+          <DialogPanel className="relative w-full max-w-lg rounded-xl bg-white p-6 text-stone-900 shadow-2xl dark:bg-navy-800 dark:text-white">
+            <button type="button" onClick={onClose} aria-label={c.close} className="absolute right-3 top-3 rounded-full p-3 hover:bg-stone-100 dark:hover:bg-navy-700"><X className="h-5 w-5" /></button>
+            <DialogTitle className="pr-10 font-serif text-2xl">{c.enquiry}</DialogTitle>
+            <p className="mt-2 break-words text-xs text-stone-600 dark:text-navy-200">{c.reference}: {artwork.id}</p>
+            <label className="mt-5 block text-sm" htmlFor="artwork-enquiry-name">{c.name}</label>
+            <input id="artwork-enquiry-name" autoComplete="name" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full rounded-md border border-stone-400 bg-transparent p-3" />
+            <label className="mt-4 block text-sm" htmlFor="artwork-enquiry-message">{c.message}</label>
+            <textarea id="artwork-enquiry-message" rows={4} value={message ?? c.defaultMessage} onChange={e => setMessage(e.target.value)} className="mt-1 w-full rounded-md border border-stone-400 bg-transparent p-3 text-sm" />
+            <a href={emailDraftUrl(subject, body)} className="mt-5 flex min-h-12 items-center justify-center rounded-md bg-navy-900 px-4 py-3 text-center font-semibold text-white dark:bg-gold-400 dark:text-navy-900">{c.draft}</a>
+            <p className="mt-2 text-xs leading-5 text-stone-600 dark:text-navy-200">{c.hint}</p>
+            <div className="mt-5 border-t border-stone-300 pt-4">
+              <p className="text-sm">{c.fallback} <a className="break-all underline" href={`mailto:${galleryInfo.email}`}>{galleryInfo.email}</a>.</p>
+              <button type="button" onClick={copy} className="my-3 min-h-11 rounded-md border border-stone-400 px-4 py-2 text-sm">{c.copy}</button>
+              <p role="status" className="text-sm">{copyStatus}</p>
+              {copyStatus === c.copyFailed && <textarea aria-label={c.copy} readOnly value={copyText} rows={6} className="mt-2 w-full border bg-transparent p-2 text-sm" />}
             </div>
-            <button
-              onClick={handleClose}
-              className="p-2 text-gray-400 hover:text-gray-600 transition-colors dark:text-stone-300"
-              aria-label="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          </DialogPanel>
         </div>
-
-        {/* Form */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  autoComplete="name"
-                  required
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.name ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="Your full name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.email ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="your.email@example.com"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
-                Phone (optional)
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                autoComplete="tel"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-navy-600"
-                placeholder="+386 XX XXX XXX"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 dark:text-stone-100">
-                Message *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={8}
-                value={formData.message || defaultMessage}
-                onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md dark:bg-navy-800 dark:text-stone-100 dark:border-navy-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                  errors.message ? 'border-red-300' : 'border-gray-300'
-                }`}
-                placeholder="Tell us about your interest in this artwork..."
-              />
-              {errors.message && (
-                <p className="mt-1 text-sm text-red-600">{errors.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Preparing email...
-                </>
-              ) : (
-                <>
-                  <Send className="h-5 w-5 mr-2" />
-                  Prepare Email Enquiry
-                </>
-              )}
-            </button>
-
-            <p className="text-xs text-gray-500 text-center dark:text-stone-300">
-              * Required fields. This opens a draft in your email app; you still need to send it.
-            </p>
-          </form>
-        </div>
-      </DialogPanel>
+      </div>
     </Dialog>
   )
 }

@@ -4,8 +4,10 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { mockArtworks } from '@/data/artworks'
+import { useTranslation } from '@/lib/TranslationContext'
+import { salesCopy } from '@/lib/sales-copy'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, assetPath } from '@/lib/utils'
+import { assetPath } from '@/lib/utils'
 import { ArtworkImage as Image } from './ArtworkImage'
 
 interface ArtworkCarouselProps {
@@ -13,6 +15,8 @@ interface ArtworkCarouselProps {
 }
 
 export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
+  const { language } = useTranslation()
+  const c = salesCopy[language]
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -104,31 +108,6 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                   />
                 )}
 
-                {/* Price Overlay */}
-                {currentArtwork.isAvailable && (
-                  <motion.div
-                    initial={false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="absolute bottom-3 left-1/2 -translate-x-1/2 max-w-[calc(100%-2rem)] bg-gold-600 text-navy-900 px-3 py-1 rounded-full font-bold text-xs sm:text-sm shadow-lg"
-                  >
-                    {currentArtwork.price ? formatPrice(currentArtwork.price, currentArtwork.currency) : 'Price on request'}
-                  </motion.div>
-                )}
-
-                {/* Sold Overlay */}
-                {!currentArtwork.isAvailable && (
-                  <motion.div
-                    initial={false}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, type: "spring" }}
-                    className="absolute inset-0 bg-black/70 flex items-center justify-center"
-                  >
-                    <span className="text-white font-bold text-xl bg-red-600 px-4 py-2 rounded-lg shadow-lg">
-                      Sold
-                    </span>
-                  </motion.div>
-                )}
               </motion.div>
 
               {/* Artwork Info */}
@@ -176,7 +155,7 @@ export function ArtworkCarousel({ onArtworkClick }: ArtworkCarouselProps) {
                   onClick={() => onArtworkClick?.(currentArtwork)}
                   className="mt-6 px-6 py-3 bg-gold-600 hover:bg-gold-700 text-navy-900 font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  View Details
+                  {c.detailsLink}
                 </motion.button>
               </motion.div>
             </motion.div>

@@ -1,210 +1,60 @@
 'use client'
 
-import Image from 'next/image'
-import { useState, useEffect, useCallback } from 'react'
+import { ArtworkImage as Image } from './ArtworkImage'
+import Link from 'next/link'
+import { useState } from 'react'
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Artwork } from '@/types/artwork'
-import { formatPrice, getCategoryLabel, assetPath } from '@/lib/utils'
+import { assetPath } from '@/lib/utils'
+import { salesCopy } from '@/lib/sales-copy'
+import { useTranslation } from '@/lib/TranslationContext'
 import { ArtworkInquiryModal } from './ArtworkInquiryModal'
 
-interface ArtworkModalProps {
-  artwork: Artwork | null
-  isOpen: boolean
-  onClose: () => void
+export function ArtworkModal({ artwork, isOpen, onClose }: {
+  artwork: Artwork | null; isOpen: boolean; onClose: () => void
+}) {
+  const { language } = useTranslation()
+  const c = salesCopy[language]
+  if (!artwork || !isOpen) return null
+  return <ArtworkDetail key={artwork.id} artwork={artwork} c={c} onClose={onClose} />
 }
 
-export function ArtworkModal({ artwork, isOpen, onClose }: ArtworkModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [imageError, setImageError] = useState(false)
-  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false)
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      setCurrentImageIndex(0)
-      setImageLoaded(false)
-      setImageError(false)
-    } else {
-      document.body.style.overflow = 'unset'
-      setIsInquiryModalOpen(false)
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset'
-      setIsInquiryModalOpen(false)
-    }
-  }, [isOpen])
-
-  const nextImage = useCallback(() => {
-    if (!artwork) return
-    setCurrentImageIndex((prev) =>
-      prev === artwork.images.length - 1 ? 0 : prev + 1
-    )
-    setImageLoaded(false)
-    setImageError(false)
-  }, [artwork])
-
-  const prevImage = useCallback(() => {
-    if (!artwork) return
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? artwork.images.length - 1 : prev - 1
-    )
-    setImageLoaded(false)
-    setImageError(false)
-  }, [artwork])
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (isInquiryModalOpen) return
-    if (e.key === 'Escape') onClose()
-    if (e.key === 'ArrowLeft' && artwork && artwork.images.length > 1) prevImage()
-    if (e.key === 'ArrowRight' && artwork && artwork.images.length > 1) nextImage()
-  }, [artwork, nextImage, prevImage, onClose, isInquiryModalOpen])
-
-  useEffect(() => {
-    if (isOpen && artwork) {
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isOpen, artwork, handleKeyDown])
-
-  if (!artwork || !isOpen) return null
-
-  const currentImage = artwork.images[currentImageIndex]
-  const hasMultipleImages = artwork.images.length > 1
-
+function ArtworkDetail({ artwork, c, onClose }: {
+  artwork: Artwork; c: typeof salesCopy.en; onClose: () => void
+}) {
+  const [index, setIndex] = useState(0)
+  const [enquiry, setEnquiry] = useState(false)
+  const image = artwork.images[index]
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 cursor-pointer"
-        onClick={onClose}
-      />
-
-      {/* Modal Content */}
-      <div className="relative max-w-6xl w-full max-h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden dark:bg-navy-800">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
-          aria-label="Close modal"
-        >
-          <X className="h-5 w-5" />
-        </button>
-
-        <div className="flex flex-col lg:flex-row">
-          {/* Image Section */}
-          <div className="relative lg:w-2/3 bg-gray-100 dark:bg-navy-800">
-            <div className="relative aspect-square lg:aspect-auto lg:h-[70vh]">
-              {imageError ? (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                  <div className="text-center">
-                    <span className="text-6xl mb-4 block">🎨</span>
-                    <span className="text-lg text-gray-500 dark:text-stone-300">{artwork.title}</span>
-                  </div>
-                </div>
-              ) : (
-                <Image
-                  src={assetPath(currentImage.url)}
-                  alt={currentImage.alt}
-                  fill
-                  className={`object-contain transition-all duration-300 ${
-                    imageLoaded ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  onLoad={() => setImageLoaded(true)}
-                  onError={() => setImageError(true)}
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  priority
-                  quality={90}
-                />
-              )}
-
-              {/* Navigation Arrows */}
-              {hasMultipleImages && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </>
-              )}
-
-              {/* Image Counter */}
-              {hasMultipleImages && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                  {currentImageIndex + 1} / {artwork.images.length}
-                </div>
-              )}
+    <Dialog open onClose={() => { if (!enquiry) onClose() }} className="fixed inset-0 z-[60]">
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
+      <div className="fixed inset-0 overflow-y-auto p-3 sm:p-6">
+        <div className="flex min-h-full items-center justify-center">
+          <DialogPanel className="relative w-full max-w-5xl overflow-hidden rounded-xl bg-white text-stone-900 shadow-2xl dark:bg-navy-800 dark:text-white">
+            <button type="button" onClick={onClose} aria-label={c.close} className="absolute right-3 top-3 z-10 rounded-full bg-black/70 p-3 text-white"><X className="h-5 w-5" /></button>
+            <div className="grid lg:grid-cols-2">
+              <div className="relative h-[32vh] min-h-44 bg-stone-100 lg:h-[65vh] dark:bg-navy-900">
+                {image && <Image src={assetPath(image.url)} alt={image.alt} fill className="object-contain" sizes="(max-width: 1024px) 100vw, 50vw" priority />}
+                {artwork.images.length > 1 && <>
+                  <button type="button" aria-label="Previous image" onClick={() => setIndex((index + artwork.images.length - 1) % artwork.images.length)} className="absolute left-2 top-1/2 rounded-full bg-black/70 p-3 text-white"><ChevronLeft /></button>
+                  <button type="button" aria-label="Next image" onClick={() => setIndex((index + 1) % artwork.images.length)} className="absolute right-2 top-1/2 rounded-full bg-black/70 p-3 text-white"><ChevronRight /></button>
+                </>}
+              </div>
+              <div className="flex flex-col justify-center p-5 sm:p-8">
+                <DialogTitle className="font-serif text-2xl sm:text-3xl">{artwork.title}</DialogTitle>
+                <p className="mt-2 break-words text-xs text-stone-600 dark:text-navy-200">{c.reference}: {artwork.id}</p>
+                <p className="mt-5 font-semibold">{c.price}</p>
+                <p className="mt-2 text-sm leading-6 text-stone-600 dark:text-navy-200">{c.details}</p>
+                <button type="button" onClick={() => setEnquiry(true)} className="mt-6 min-h-12 rounded-md bg-navy-900 px-5 py-3 font-semibold text-white dark:bg-gold-400 dark:text-navy-900">{c.request}</button>
+                <p className="mt-2 text-xs leading-5 text-stone-600 dark:text-navy-200">{c.note}</p>
+                <Link className="mt-5 text-sm underline underline-offset-4" href={`/gallery/?artwork=${encodeURIComponent(artwork.id)}`}>{c.link}</Link>
+              </div>
             </div>
-          </div>
-
-          {/* Details Section */}
-          <div className="lg:w-1/3 p-6 lg:p-8 overflow-y-auto max-h-[50vh] lg:max-h-[70vh]">
-            <div className="space-y-6">
-              {/* Title and Artist */}
-              <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2 dark:text-stone-100">
-                  {artwork.title}
-                </h2>
-                {artwork.artist !== 'Contemporary Slovenian Artist' && (
-                  <p className="text-lg text-gray-600 dark:text-stone-300">
-                    by {artwork.artist}
-                  </p>
-                )}
-              </div>
-
-              {/* Price */}
-              <div className="flex items-center justify-between">
-                <span className="text-xl font-bold text-gray-900 dark:text-stone-100">
-                  {artwork.price ? formatPrice(artwork.price, artwork.currency) : 'Price on request'}
-                </span>
-                {!artwork.isAvailable && (
-                  <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                    Sold
-                  </span>
-                )}
-              </div>
-
-              <div className="space-y-2 text-sm text-gray-600 dark:text-stone-300">
-                <p>Category: {getCategoryLabel(artwork.category)}</p>
-                <p>Ask the gallery for confirmed artist, date, medium, dimensions, and provenance.</p>
-              </div>
-
-              {/* Contact Button */}
-              {artwork.isAvailable && (
-                <div className="pt-4">
-                  <button
-                    onClick={() => setIsInquiryModalOpen(true)}
-                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors font-medium"
-                  >
-                    Inquire About This Artwork
-                  </button>
-                  <p className="text-xs text-gray-500 mt-2 text-center dark:text-stone-300">
-                    Contact us for pricing and availability
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+            <ArtworkInquiryModal key={artwork.id} artwork={artwork} isOpen={enquiry} onClose={() => setEnquiry(false)} />
+          </DialogPanel>
         </div>
       </div>
-
-      {/* Artwork Inquiry Modal */}
-      <ArtworkInquiryModal
-        artwork={artwork}
-        isOpen={isInquiryModalOpen}
-        onClose={() => setIsInquiryModalOpen(false)}
-      />
-    </div>
+    </Dialog>
   )
 }

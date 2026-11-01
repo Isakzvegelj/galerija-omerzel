@@ -9,6 +9,8 @@ interface TranslationContextType {
   t: (key: TranslationKey) => string
 }
 
+const languageStorageKey = process.env.NEXT_PUBLIC_BASE_PATH ? 'gallery-sales-preview-language' : 'preferred-language'
+
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined)
 
 interface TranslationProviderProps {
@@ -21,7 +23,7 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
   // Load saved language preference on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedLanguage = localStorage.getItem('preferred-language')
+      const savedLanguage = localStorage.getItem(languageStorageKey)
       if (savedLanguage === 'en' || savedLanguage === 'sl') {
         setLanguageState(savedLanguage)
       }
@@ -35,7 +37,7 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
     if (typeof window !== 'undefined') {
-      localStorage.setItem('preferred-language', lang)
+      localStorage.setItem(languageStorageKey, lang)
     }
   }
 

@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  experimental: { cpus: 1 },
   trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
